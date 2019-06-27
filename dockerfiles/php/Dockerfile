@@ -36,7 +36,7 @@ RUN docker-php-ext-install gd bcmath zip bz2 pdo pdo_pgsql simplexml opcache soc
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 RUN docker-php-ext-install pdo_mysql exif
 RUN pecl install imagick
-RUN docker-php-ext-enable imagick
+RUN docker-php-ext-enable imagick exif
 RUN pecl install xdebug
 RUN wget http://xdebug.org/files/xdebug-2.6.1.tgz
 RUN tar -xvzf xdebug-2.6.1.tgz
