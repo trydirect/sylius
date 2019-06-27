@@ -1,0 +1,8 @@
+{% macro fromCountryCode(country_code) %}
+    <i class="{{ country_code|lower }} flag"></i>
+{% endmacro %}
+
+{% macro fromLocaleCode(locale_code) %}
+    {% import _self as flags %}
+    {{ flags.fromCountryCode(locale_code|slice(-2)) }}
+{% endmacro %}
