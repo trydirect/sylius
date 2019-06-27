@@ -1,7 +1,7 @@
 FROM php:7.2-fpm-alpine3.6
 WORKDIR '/app'
 RUN apk update && apk upgrade\
-    && apk add --no-cache curl libbz2 php7-bz2 php7-pdo php7-pgsql php7-bcmath php7-zmq php7-curl bash php7-pear php7-imagick openssh\
+    && apk add --no-cache curl libbz2 php7-bz2 php7-pdo php7-intl php7-pgsql php7-bcmath php7-zmq php7-curl bash php7-pear php7-imagick openssh\
     libtool \
     postgresql-dev \
     libpng-dev \
