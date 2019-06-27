@@ -1,7 +1,7 @@
 FROM php:7.2-fpm-alpine3.6
 WORKDIR '/app'
 RUN apk update && apk upgrade\
-    && apk add --no-cache curl libbz2 php7-bz2 php7-pdo php7-intl php7-pgsql php7-bcmath php7-zmq php7-curl bash php7-pear php7-imagick openssh\
+    && apk add --no-cache curl libbz2 php7-bz2 php7-pdo php7-pgsql php7-bcmath php7-zmq php7-curl bash php7-pear php7-imagick openssh\
     libtool \
     postgresql-dev \
     libpng-dev \
@@ -32,6 +32,9 @@ RUN apk update && apk upgrade\
     ffmpeg \
     wget
 
+RUN curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/57.1/icu4c-57_1-src.tgz && tar -zxf /tmp/icu.tar.gz -C /tmp && cd /tmp/icu/source && ./configure --prefix=/usr/local && make && make install
+RUN docker-php-ext-configure intl --with-icu-dir=/usr/local && \
+    docker-php-ext-install intl
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN docker-php-ext-install gd bcmath zip bz2 pdo pdo_pgsql simplexml opcache sockets mbstring pcntl xsl pspell
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
