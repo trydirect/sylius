@@ -58,7 +58,8 @@ RUN cd xdebug-2.6.1 \
     && echo 'xdebug.remote_handler=dbgp' >> /usr/local/etc/php.ini \
     && echo 'xdebug.max_nesting_level=512' >> /usr/local/etc/php.ini \
     && echo 'extension=xdebug.so' >> /usr/local/etc/php.ini \
-    && echo 'memory_limit=1024M' >> /usr/local/etc/php.ini
+    && sed -ie 's/memory_limit\ =\ 128M/memory_limit\ =\ 1G/g' /usr/local/etc/php/php.ini-development \
+    && sed -ie 's/memory_limit\ =\ 128M/memory_limit\ =\ 1G/g' /usr/local/etc/php/php.ini-production
 RUN cd /usr/src && curl -OL https://github.com/Sylius/Sylius/archive/v1.5.2.tar.gz
 RUN adduser -u 2000 -g 2000 -h /home/symfony -s /bin/bash -D symfony
 WORKDIR '/var/www/html'
