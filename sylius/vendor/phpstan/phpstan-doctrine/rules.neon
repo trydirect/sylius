@@ -1,0 +1,27 @@
+parameters:
+	doctrine:
+		reportDynamicQueryBuilders: false
+
+parametersSchema:
+	doctrine: structure([
+		repositoryClass: schema(string(), nullable())
+		queryBuilderClass: schema(string(), nullable())
+		allCollectionsSelectable: bool()
+		objectManagerLoader: schema(string(), nullable())
+		searchOtherMethodsForQueryBuilderBeginning: bool()
+		queryBuilderFastAlgorithm: bool()
+		reportDynamicQueryBuilders: bool()
+	])
+
+rules:
+	- PHPStan\Rules\Doctrine\ORM\DqlRule
+	- PHPStan\Rules\Doctrine\ORM\MagicRepositoryMethodCallRule
+	- PHPStan\Rules\Doctrine\ORM\RepositoryMethodCallRule
+
+services:
+	-
+		class: PHPStan\Rules\Doctrine\ORM\QueryBuilderDqlRule
+		arguments:
+			reportDynamicQueryBuilders: %doctrine.reportDynamicQueryBuilders%
+		tags:
+			- phpstan.rules.rule

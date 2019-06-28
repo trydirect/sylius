@@ -1,0 +1,9 @@
+{
+    "require-dev": {
+        "phpstan/phpstan": "^0.8"
+    },
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    }
+}

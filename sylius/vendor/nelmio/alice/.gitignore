@@ -1,0 +1,11 @@
+/.php_cs.cache
+/bin/
+/composer.lock
+/dist/
+/fixtures/Bridge/Symfony/Application/cache/
+/vendor/
+/vendor-bin/*/bin/
+/vendor-bin/*/vendor/
+/vendor-bin/*/composer.lock
+/humbuglog.json
+/humbuglog.txt

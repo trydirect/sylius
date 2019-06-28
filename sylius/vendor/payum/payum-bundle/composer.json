@@ -1,0 +1,87 @@
+{
+    "name": "payum/payum-bundle",
+    "type": "symfony-bundle",
+    "description": "One million downloads of Payum already! Payum offers everything you need to work with payments. Check more visiting site.",
+    "keywords": [
+        "symfony",
+        "payment",
+        "paypal",
+        "be2bill",
+        "authorize.net",
+        "omnipay",
+        "paypal express checkout",
+        "paypal pro checkout",
+        "recurring payment",
+        "instant notifications",
+        "payex",
+        "klarna",
+        "offline",
+        "stripe",
+        "stripe.js",
+        "stripe checkout"
+    ],
+    "homepage": "https://payum.forma-pro.com/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kotlyar Maksim",
+            "email": "kotlyar.maksim@gmail.com"
+        },
+        {
+            "name":     "Payum project",
+            "homepage": "https://payum.forma-pro.com/"
+        },
+        {
+            "name":     "Community contributions",
+            "homepage": "https://github.com/Payum/PayumBundle/contributors"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "payum/core": "^1.5",
+        "symfony/framework-bundle": "^3.1|^4",
+        "symfony/form": "^3.1|^4",
+        "symfony/validator": "^3.1|^4",
+        "symfony/security-csrf": "^3.1|^4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7",
+        "twig/twig": "^1.16|^2.0",
+        "symfony/twig-bundle": "^3.1|^4",
+        "symfony/expression-language": "^3.1|^4",
+        "symfony/browser-kit": "^3.1|^4",
+        "symfony/phpunit-bridge": "^3.1|^4",
+        "symfony/templating": "^3.1|^4",
+        "defuse/php-encryption": "^2",
+        "doctrine/orm": "~2.5",
+        "payum/payum": "^1.5@dev",
+        "payum/omnipay-v3-bridge": "^1@alpha",
+
+        "php-http/guzzle6-adapter": "^1",
+        "omnipay/dummy": "^3@alpha",
+        "omnipay/paypal": "^3@dev",
+        "omnipay/common": "^3@dev",
+        "paypal/rest-api-sdk-php" : "0.5.*",
+        "klarna/checkout": "~1|~2.0",
+        "fp/klarna-invoice": "0.1.*",
+        "stripe/stripe-php": "~1.0",
+
+        "ext-curl": "*",
+        "ext-pdo_sqlite": "*",
+        "ext-soap": "*"
+    },
+    "suggest": {
+        "sonata-project/admin-bundle": "^3 If you want to configure payments in the backend."
+    },
+    "autoload": {
+        "psr-4": { "Payum\\Bundle\\PayumBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3-dev"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}

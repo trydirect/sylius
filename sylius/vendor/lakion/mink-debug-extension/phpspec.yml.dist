@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: Lakion\Behat\MinkDebugExtension
+        psr4_prefix: Lakion\Behat\MinkDebugExtension

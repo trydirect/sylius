@@ -1,0 +1,10 @@
+{
+    "require-dev": {
+        "symfony/symfony": "^3.4 || ^4.0",
+        "theofidry/composer-inheritance-plugin": "^1.0"
+    },
+    "config": {
+        "bin-dir": "bin",
+        "sort-packages": true
+    }
+}

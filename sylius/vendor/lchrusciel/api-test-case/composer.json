@@ -1,0 +1,67 @@
+{
+    "name": "lakion/api-test-case",
+    "description": "Perfect PHPUnit TestCase for JSON/XML API TDD with Symfony.",
+    "keywords": ["TDD", "Symfony", "PHPUnit", "Doctrine", "API", "JSON", "XML"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Łukasz Chruściel",
+            "email": "lukasz.chrusciel@lakion.com"
+        },
+        {
+            "name": "Paweł Jędrzejewski",
+            "homepage": "http://pjedrzejewski.com",
+            "email": "pawel.jedrzejewski@lakion.com"
+        },
+        {
+            "name": "Michał Marcinkowski",
+            "email": "michal.marcinkowski@lakion.com"
+        },
+        {
+            "name": "Arkadiusz Krakowiak",
+            "email": "arkadiusz.krakowiak@lakion.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+
+        "coduo/php-matcher": "^2.3|^3.0",
+        "doctrine/data-fixtures": "^1.2",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/orm": "^2.5",
+        "nelmio/alice": "^3.1",
+        "phpspec/php-diff": "^1.1",
+        "phpunit/phpunit": "^6.0|^7.0",
+        "polishsymfonycommunity/symfony-mocker-container": "^1.0",
+        "symfony/browser-kit": "^3.4|^4.0",
+        "symfony/finder": "^3.4|^4.0",
+        "symfony/framework-bundle": "^3.4|^4.0",
+        "theofidry/alice-data-fixtures": "^1.0"
+    },
+    "require-dev": {
+        "symfony/serializer": "^3.4|^4.0"
+    },
+    "conflict": {
+        "symfony/dependency-injection": "4.1.0"
+    },
+    "replace": {
+        "lakion/api-test-case": "self.version"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lakion\\ApiTestCase\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lakion\\ApiTestCase\\Test\\": "test/src/",
+            "Lakion\\ApiTestCase\\Test\\App\\": "test/app/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0-dev"
+        }
+    }
+}

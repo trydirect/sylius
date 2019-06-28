@@ -1,0 +1,69 @@
+{
+    "name": "sylius/mailer-bundle",
+    "type": "symfony-bundle",
+    "description": "Mailers and e-mail template management for Symfony projects.",
+    "keywords": ["mailer", "email", "swiftmailer"],
+    "homepage": "http://sylius.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Paweł Jędrzejewski",
+            "homepage": "http://pjedrzejewski.com"
+        },
+        {
+            "name": "Sylius project",
+            "homepage": "http://sylius.com"
+        },
+        {
+            "name": "Community contributions",
+            "homepage": "http://github.com/Sylius/Sylius/contributors"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+
+        "symfony/config": "^3.4|^4.1.1",
+        "symfony/dependency-injection": "^3.4|^4.1.1",
+        "symfony/framework-bundle": "^3.4|^4.1.1",
+        "symfony/http-kernel": "^3.4|^4.1.1"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^5.0",
+        "phpstan/phpstan-phpunit": "^0.11",
+        "phpstan/phpstan-shim": "^0.11",
+        "phpstan/phpstan-webmozart-assert": "^0.11",
+        "phpunit/phpunit": "^7.0",
+        "sylius-labs/coding-standard": "^3.0",
+        "symfony/console": "^3.4|^4.1.1",
+        "symfony/swiftmailer-bundle": "^3.1",
+        "symfony/twig-bundle": "^3.4|^4.1.1"
+    },
+    "replace": {
+        "sylius/mailer": "self.version"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sylius\\Bundle\\MailerBundle\\": "src/Bundle/",
+            "Sylius\\Component\\Mailer\\": "src/Component/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Sylius\\Bundle\\MailerBundle\\spec\\": "src/Bundle/spec/",
+            "Sylius\\Component\\Mailer\\spec\\": "src/Component/spec/"
+        },
+        "classmap": [
+            "src/Bundle/test/app/AppKernel.php"
+        ]
+    },
+    "scripts": {
+        "analyse": [
+            "@php vendor/bin/phpstan analyse --ansi -c phpstan.neon -l max src"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.4-dev"
+        }
+    }
+}

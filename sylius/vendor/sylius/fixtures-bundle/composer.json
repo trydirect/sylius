@@ -1,0 +1,63 @@
+{
+    "name": "sylius/fixtures-bundle",
+    "type": "symfony-bundle",
+    "description": "Configurable fixtures for Symfony applications.",
+    "keywords": ["sylius", "fixtures", "symfony"],
+    "homepage": "http://sylius.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kamil Kokot",
+            "homepage": "http://kamil.kokot.me"
+        },
+        {
+            "name": "Sylius project",
+            "homepage": "http://sylius.com"
+        },
+        {
+            "name": "Community contributions",
+            "homepage": "http://github.com/Sylius/Sylius/contributors"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+
+        "doctrine/data-fixtures": "^1.2",
+        "monolog/monolog": "^1.8",
+        "symfony/framework-bundle": "^3.4|^4.1.1",
+        "symfony/monolog-bridge": "^3.4|^4.1.1",
+        "webmozart/assert": "^1.0",
+        "zendframework/zend-stdlib": "^3.0"
+    },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "^1.3",
+        "doctrine/orm": "^2.5",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.0",
+        "phpspec/phpspec": "^5.0",
+        "phpstan/phpstan-phpunit": "^0.10",
+        "phpstan/phpstan-shim": "^0.10",
+        "phpunit/phpunit": "^7.0",
+        "proget-hq/phpstan-phpspec": "^0.1.1",
+        "sylius-labs/coding-standard": "^3.0"
+    },
+    "autoload": {
+        "psr-4": { "Sylius\\Bundle\\FixturesBundle\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "spec\\Sylius\\Bundle\\FixturesBundle\\": "spec/",
+            "Sylius\\Bundle\\FixturesBundle\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "analyse": [
+            "@php vendor/bin/phpstan analyse --ansi -c phpstan.neon -l max spec src tests"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.4-dev"
+        }
+    }
+}

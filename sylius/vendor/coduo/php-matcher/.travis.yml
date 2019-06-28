@@ -1,0 +1,27 @@
+language: php
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+matrix:
+  include:
+    - php: 7.0
+      env: DEPENDENCIES='low'
+    - php: 7.1
+    - php: 7.2
+    - php: 7.3
+
+before_install:
+  - composer self-update
+
+install:
+  - export COMPOSER_ROOT_VERSION=dev-master
+  - if [ "$DEPENDENCIES" != "low" ]; then composer update; fi;
+  - if [ "$DEPENDENCIES" == "low" ]; then composer update --prefer-lowest; fi;
+
+script:
+  - ./bin/phpunit
+  - ./bin/php-cs-fixer fix -v --dry-run

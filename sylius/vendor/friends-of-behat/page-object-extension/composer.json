@@ -1,0 +1,47 @@
+{
+    "name": "friends-of-behat/page-object-extension",
+    "description": "Provides default classes for Page object pattern in Behat",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Łukasz Chruściel",
+            "email": "lchrusciel@gmail.com"
+        },
+        {
+            "name": "Kamil Kokot",
+            "email": "kamil@kokot.me",
+            "homepage": "http://kamil.kokot.me"
+        },
+        {
+            "name": "Mateusz Zalewski",
+            "email": "mateusz.p.zalewski@gmail.com",
+            "homepage": "http://mpzalewski.com.pl"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+
+        "behat/mink": "^1.7"
+    },
+    "require-dev": {
+        "symfony/routing": "^3.4"
+    },
+    "suggest": {
+        "symfony/routing": "Allow better support for PageObject pattern in Symfony applications"
+    },
+    "conflict": {
+        "symfony/routing": "<3.4"
+    },
+    "autoload": {
+        "psr-4": { "FriendsOfBehat\\PageObjectExtension\\": "src/" }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.3-dev"
+        }
+    }
+}

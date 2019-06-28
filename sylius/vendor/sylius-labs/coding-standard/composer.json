@@ -1,0 +1,28 @@
+{
+    "name": "sylius-labs/coding-standard",
+    "description": "Battle-tested coding standard configuration used in Sylius.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kamil Kokot",
+            "email": "kamil@kokot.me",
+            "homepage": "http://kamil.kokot.me"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+
+        "friendsofphp/php-cs-fixer": "^2.12",
+        "symplify/easy-coding-standard": "^4.5|^5.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\SyliusLabs\\CodingStandard\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0-dev"
+        }
+    }
+}

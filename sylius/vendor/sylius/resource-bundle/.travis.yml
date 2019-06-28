@@ -1,0 +1,36 @@
+language: php
+
+php:
+    - 7.2
+    - 7.3
+
+env:
+    - SYMFONY_VERSION=3.4.*
+    - SYMFONY_VERSION=4.1.*
+    - SYMFONY_VERSION=4.2.*
+
+cache:
+    directories:
+        - ~/.composer/cache/files
+
+before_install:
+    - phpenv config-rm xdebug.ini || true
+
+install:
+    - composer update --prefer-dist
+    - (cd src/Component && composer update --prefer-dist)
+
+before_script:
+    - (cd src/Bundle/test && app/console doctrine:database:create)
+    - (cd src/Bundle/test && app/console doctrine:schema:create)
+
+script:
+    - composer validate --strict
+    - (cd src/Component && composer validate --strict)
+
+    - composer analyse
+
+    - vendor/bin/phpspec run
+    - (cd src/Component && vendor/bin/phpspec run)
+
+    - vendor/bin/phpunit

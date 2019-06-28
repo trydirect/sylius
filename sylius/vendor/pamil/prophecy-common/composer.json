@@ -1,0 +1,29 @@
+{
+    "name": "pamil/prophecy-common",
+    "description": "Common helper classes for Prophecy",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kamil Kokot",
+            "email": "kamil@kokot.me",
+            "homepage": "http://kamil.kokot.me"
+        }
+    ],
+    "require": {
+        "phpspec/prophecy": "^1.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^2.5"
+    },
+    "autoload": {
+        "psr-4": { "Pamil\\ProphecyCommon\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "spec\\Pamil\\ProphecyCommon\\": "spec/",
+
+            "example\\Pamil\\ProphecyCommon\\": "example/src/",
+            "spec\\example\\Pamil\\ProphecyCommon\\": "example/spec/"
+        }
+    }
+}

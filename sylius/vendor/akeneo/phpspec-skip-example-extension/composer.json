@@ -1,0 +1,41 @@
+{
+    "name": "akeneo/phpspec-skip-example-extension",
+    "description": "Skip your PhpSpec examples through annotations",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gildas Quéméner",
+            "email": "gildas@akeneo.com"
+        },
+        {
+            "name": "Nicolas Dupont",
+            "email": "nicolas@akeneo.com"
+        },
+        {
+            "name": "Kamil Kokot",
+            "email": "kamil@kokot.me"
+        }
+    ],
+    "require": {
+        "phpspec/phpspec": "^5.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Akeneo": "src/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0.x-dev",
+            "dev-3.0": "3.0.x-dev",
+            "dev-2.0": "2.0.x-dev",
+            "dev-1.2": "1.2.x-dev",
+            "dev-1.1": "1.1.x-dev",
+            "dev-1.0": "1.0.x-dev"
+        }
+    }
+}

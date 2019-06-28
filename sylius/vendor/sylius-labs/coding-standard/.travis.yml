@@ -1,0 +1,23 @@
+language: php
+
+php:
+    - 7.1
+    - 7.2
+
+env:
+    - COMPOSER_FLAGS="--prefer-lowest"
+
+cache:
+    directories:
+        - ~/.composer/cache/files
+
+before_install:
+    - phpenv config-rm xdebug.ini || true
+
+install:
+    - composer update --prefer-dist $COMPOSER_FLAGS
+
+script:
+    - composer validate --strict
+
+    - vendor/bin/ecs check tests
