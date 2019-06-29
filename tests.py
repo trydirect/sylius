@@ -89,6 +89,8 @@ assert mq.status == 'running'
 logs = mq.logs()
 assert 'Server startup complete; 3 plugins started' in logs.decode()
 
+time.sleep(20)
 response = requests.get("http://localdomain/")
+print(response.text)
 assert response.status_code == 200
 assert '<title>Sylius</title>' in response.text
