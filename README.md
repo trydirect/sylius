@@ -22,35 +22,50 @@ Quick deployment of Sylius development environment
 * Supervisord
 
 ## Note
-Before installing this project, please, make sure you have installed docker and docker-compose
 
+Before installing this project, please, make sure you have installed docker and docker-compose 
 To install docker execute: 
+
 ```sh
 $ curl -fsSL https://get.docker.com -o get-docker.sh
 $ sh get-docker.sh
 $ pip install docker-compose
 ```
 ## Installation
-Clone this project into your work directory:
+
+1. Clone project files:
+
 ```sh
 $ git clone https://github.com/trydirect/sylius.git
 ```
-1. Bring up the project with following command:
+
+2. Bring up the project with following command:
+
 ```sh
 $ cd sylius
 $ ./setup.sh
 ```
 
-2. Add localdomain to your hosts file Linux, OSX: 
+3. Add localdomain to your hosts file Linux, OSX: 
 
 ```
 echo  "127.0.0.1 localdomain kibana.localdomain" | sudo tee -a /etc/hosts
 ```
 
-Open http://localdomain in your browser
+4. Let's check the result 
+
+| URL | App |
+| --- | --- |
+| http://localdomain | sylius home page |
+| https://kibana.localdomain | kibana dashboard |
 
 
-# Contributing
+Default kibana creds:  
+- login: admin   
+- password:  admin
+
+
+## Contributing
 
 1. Fork it (https://github.com/trydirect/sylius/fork)
 2. Create your feature branch (git checkout -b feature/fooBar)
@@ -59,6 +74,6 @@ Open http://localdomain in your browser
 5. Create a new Pull Request
 
 
-# Support Development
+## Support Development
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2BH8ED2AUU2RL)
