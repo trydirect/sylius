@@ -16,7 +16,7 @@ before_script:
 - pip install docker
 script:
 - bash ./.travis/linters.sh
-- bash ./setup.sh
+- bash ./build.sh
 - python tests.py
 notifications:
   slack:
