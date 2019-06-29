@@ -21,7 +21,7 @@ time.sleep(20)  # we expect all containers are up and running in 20 secs
 nginx = client.containers.get('nginx')
 nginx_cfg = nginx.exec_run("/usr/sbin/nginx -T")
 assert nginx.status == 'running'
-assert 'server_name _;' in nginx_cfg.output.decode()
+assert 'server_name localdomain;' in nginx_cfg.output.decode()
 assert "error_log /proc/self/fd/2" in nginx_cfg.output.decode()
 assert "location = /.well-known/acme-challenge/" in nginx_cfg.output.decode()
 assert 'HTTP/1.1" 500' not in nginx.logs()
@@ -71,24 +71,24 @@ assert 'PONG' in redis_cli.output.decode()
 redis_log = redis.logs()
 assert "Ready to accept connections" in redis_log.decode()
 
-# mysql = client.containers.get('db')
-# assert mysql.status == 'running'
-# mycnf = mysql.exec_run("/usr/sbin/mysqld --verbose  --help")
-# assert '/usr/sbin/mysqld  Ver 5.7.26' in mycnf.output.decode()
-# mysql_log = mysql.logs()
-# assert "Ready to accept connections" in mysql_log.decode()
+mysql = client.containers.get('db')
+assert mysql.status == 'running'
+mycnf = mysql.exec_run("/usr/sbin/mysqld --verbose  --help")
+assert '/usr/sbin/mysqld  Ver 5.7.26' in mycnf.output.decode()
+mysql_log = mysql.logs()
+assert "mysqld: ready for connections." in mysql_log.decode()
 
-db = client.containers.get('db')
-assert db.status == 'running'
-cnf = db.exec_run('psql -U symfony -h 127.0.0.1 -p 5432 -c "select 1"')
-log = db.logs()
-assert '(1 row)' in cnf.output.decode()
+# db = client.containers.get('db')
+# assert db.status == 'running'
+# cnf = db.exec_run('psql -U sylius -h 127.0.0.1 -p 5432 -c "select 1"')
+# log = db.logs()
+# assert '(1 row)' in cnf.output.decode()
 
 mq = client.containers.get('mq')
 assert mq.status == 'running'
 logs = mq.logs()
 assert 'Server startup complete; 3 plugins started' in logs.decode()
 
-response = requests.get("http://localhost/")
-assert response.status_code == 404
-assert '<title>Welcome!</title>' in response.text
+response = requests.get("http://localdomain/")
+assert response.status_code == 200
+assert '<title>Sylius</title>' in response.text
