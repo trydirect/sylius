@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/trydirect/sylius.svg?branch=master)](https://travis-ci.com/trydirect/sylius)
+[![Build Status](https://travis-ci.com/trydirect/sylius.svg?branch=1.5.2)](https://travis-ci.com/trydirect/sylius)
 ![Docker Stars](https://img.shields.io/docker/stars/trydirect/sylius.svg)
 ![Docker Pulls](https://img.shields.io/docker/pulls/trydirect/sylius.svg)
 ![Docker Automated](https://img.shields.io/docker/cloud/automated/trydirect/sylius.svg)
@@ -57,7 +57,7 @@ echo  "127.0.0.1 localdomain kibana.localdomain" | sudo tee -a /etc/hosts
 | URL | App |
 | --- | --- |
 | http://localdomain | sylius home page |
-| https://kibana.localdomain | kibana dashboard |
+| http://kibana.localdomain | kibana dashboard |
 
 
 Default kibana creds:  
