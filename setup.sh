@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+printf "admin:`echo "admin" | openssl passwd -stdin`" > ./configs/nginx/conf.d/.htpasswd
 docker-compose up -d
 cp ./configs/sylius/.env ./sylius/.env
 docker exec -i php composer dump-env dev
