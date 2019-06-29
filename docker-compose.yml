@@ -9,26 +9,33 @@ services:
 
   php:
     image: trydirect/sylius:1.5.2
-    build: ./dockerfiles/php
     restart: always
     container_name: php
-    env_file:
-         - .env
     links:
       - db
     working_dir: /var/www/html
-    environment:
-      XDEBUG_CONFIG: remote_host=0.0.0.0
+    env_file:
+      - .env
     volumes:
-      - ./symfony:/var/www/html
+      - ./sylius:/var/www/html
       - ./configs/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./configs/php/xdebug.ini:/usr/local/lib/php/doc/xdebug/xdebug.ini
-#    logging:
-#         driver: "json-file"
-#         options:
-#           max-size: "10m"
-#           tag: "php"
+    logging:
+         driver: "json-file"
+         options:
+           max-size: "10m"
+           tag: "php"
 
+  node:
+    image: node:8.15
+    container_name: node
+    environment:
+      YARN_CACHE_FOLDER: '/home/node/.yarn-cache'
+    user: node
+    volumes:
+      - ./sylius:/var/www/html
+      - ./sylius/.cache/yarn:/home/node/.yarn-cache
+    working_dir: /var/www/html
 
   elasticsearch:
     image: elasticsearch:5.4.3
@@ -70,7 +77,6 @@ services:
 
   logstash:
       image: optimum/logstash-symfony-5.4.0
-      #build: configs/logstash/
       environment:
         LS_JAVA_OPTS: "-Xms1g -Xmx4g"
       container_name: logstash
@@ -81,6 +87,8 @@ services:
         - elasticsearch
       depends_on:
         - elasticsearch
+      volumes:
+        - ./configs/logstash/filebeat.conf:/usr/share/logstash/pipeline/filebeat.conf
 
   filebeat:
     image: docker.elastic.co/beats/filebeat:6.7.1
@@ -104,34 +112,29 @@ services:
         - .env
       volumes:
         - redis-data:/data
- #     logging:
- #       driver: "json-file"
- #       options:
- #         max-size: "10m"
- #         tag: "redis"
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "10m"
+          tag: "redis"
 
   db:
-    image: postgres:9.4
+    image: mysql:5.7
     container_name: db
     restart: always
-    ports:
-      #- "5432:5432" - publish port to the world.
-      - "5432"
     env_file:
-      - .env
+      .env
     volumes:
-      - db:/var/lib/postgresql/data/pgdata
-      - ./scripts/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
-#    logging:
-#      driver: "json-file"
-#      options:
-#        max-size: "10m"
-#        tag: "db"
-
+      - db:/var/lib/mysql
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        tag: "db"
 
 # entry point
   nginx:
-    image: trydirect/nginx:latest
+    image: ${REGISTRY}trydirect/nginx:latest
     container_name: nginx
     restart: always
     depends_on:
@@ -149,13 +152,13 @@ services:
       - ./configs/nginx/conf.d:/etc/nginx/conf.d
       - ./configs/supervisord:/etc/supervisor/conf.d/
       - ./configs/cron/nginx:/var/spool/cron/crontabs
-      - ./symfony:/var/www/html
+      - ./sylius:/var/www/html
     entrypoint: /usr/bin/supervisord -c /etc/supervisor/supervisord.conf -n
-#    logging:
-#      driver: "json-file"
-#      options:
-#        max-size: "10m"
-#        gelf-tag: "container_{{.Name}}"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        tag: "nginx"
 
   # basic data bus for interaction between servers
   mq:
@@ -170,9 +173,8 @@ services:
       - "2172:5672"
       - "5672"
       - "21072:15672"
-#    logging:
-#      driver: "json-file"
-#      options:
-#        max-size: "10m"
-#        tag: "rabbitm"
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        tag: "rabbitmq"

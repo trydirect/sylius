@@ -1,0 +1,36 @@
+language: python
+python:
+- 2.7
+services:
+- docker
+before_install:
+- sudo apt-get update
+- docker-compose --version
+- pip install docker-compose --upgrade
+- docker-compose --version
+install:
+- docker-compose -f docker-compose-build.yml up -d --build
+- docker-compose -f docker-compose-build.yml ps
+before_script:
+- pip install requests
+- pip install docker
+script:
+- bash ./.travis/linters.sh
+- python tests.py
+notifications:
+  slack:
+    rooms:
+    - optimum-team:GycletOWK4Kt95GktwYwfUMp#build
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/0aa6221439383fa972ab
+    on_success: change
+    on_failure: always
+    on_start: never
+after_success:
+- echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+- docker-compose -f docker-compose-build.yml images
+- docker push trydirect/sylius:1.5.2
+env:
+  matrix:
+    - DOCKER_CONTENT_TRUST=1

@@ -1,0 +1,8 @@
+parameters:
+    sylius.database.driver: pdo_mysql
+    sylius.database.host: db
+    sylius.database.port: 3306
+    sylius.database.name: {{MYSQL_DATABASE}}
+    sylius.database.path: null
+    sylius.database.user: {{MYSQL_USER}}
+    sylius.database.password: {{MYSQL_PASSWORD}}
