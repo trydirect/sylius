@@ -65,6 +65,12 @@ Default kibana creds:
 - password:  admin
 
 
+## Quick deployment to cloud
+##### Amazon AWS, Digital Ocean, Hetzner and others
+[<img src="https://img.shields.io/badge/quick%20deploy-%40try.direct-brightgreen.svg">](https://try.direct/server/user/deploy/InN5bGl1c3w2fDMwIg.EIJLoA.U55nSFwuA2BqoNB6VDiiJgnmrOI/)
+
+
+
 ## Contributing
 
 1. Fork it (https://github.com/trydirect/sylius/fork)
