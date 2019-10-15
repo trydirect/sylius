@@ -74,7 +74,7 @@ assert "Ready to accept connections" in redis_log.decode()
 mysql = client.containers.get('db')
 assert mysql.status == 'running'
 mycnf = mysql.exec_run("/usr/sbin/mysqld --verbose  --help")
-assert '/usr/sbin/mysqld  Ver 5.7.26' in mycnf.output.decode()
+assert '/usr/sbin/mysqld  Ver 5' in mycnf.output.decode()
 mysql_log = mysql.logs()
 assert "mysqld: ready for connections." in mysql_log.decode()
 
