@@ -20,8 +20,11 @@ use Sylius\Component\Resource\Model\TimestampableInterface;
 interface OrderInterface extends AdjustableInterface, ResourceInterface, TimestampableInterface
 {
     public const STATE_CART = 'cart';
+
     public const STATE_NEW = 'new';
+
     public const STATE_CANCELLED = 'cancelled';
+
     public const STATE_FULFILLED = 'fulfilled';
 
     public function getCheckoutCompletedAt(): ?\DateTimeInterface;
@@ -42,6 +45,8 @@ interface OrderInterface extends AdjustableInterface, ResourceInterface, Timesta
 
     /**
      * @return Collection|OrderItemInterface[]
+     *
+     * @psalm-return Collection<array-key, OrderItemInterface>
      */
     public function getItems(): Collection;
 
@@ -71,6 +76,8 @@ interface OrderInterface extends AdjustableInterface, ResourceInterface, Timesta
 
     /**
      * @return Collection|AdjustmentInterface[]
+     *
+     * @psalm-return Collection<array-key, AdjustmentInterface>
      */
     public function getAdjustmentsRecursively(?string $type = null): Collection;
 

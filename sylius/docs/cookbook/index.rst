@@ -51,6 +51,7 @@ Payments
     payments/stripe
     payments/encrypting-gateway-config
     payments/authorize
+    payments/custom-payment-gateway
 
 .. include:: /cookbook/payments/map.rst.inc
 
@@ -61,6 +62,7 @@ Emails
     :hidden:
 
     emails/custom-email
+    emails/custom-email-template-per-channel
     emails/disabling-order-confirmation-email
     emails/mailer
 
@@ -77,6 +79,16 @@ Promotions
 
 .. include:: /cookbook/promotions/map.rst.inc
 
+Inventory
+---------
+
+.. toctree::
+    :hidden:
+
+    inventory/custom-inventory-sources-filter
+
+.. include:: /cookbook/inventory/map.rst.inc
+
 Images
 ------
 
@@ -84,8 +96,8 @@ Images
     :hidden:
 
     images/images
-    images/images-gridfs
     images/images-on-entity
+    images/images-on-aws-s3
 
 .. include:: /cookbook/images/map.rst.inc
 
@@ -95,8 +107,8 @@ Deployment
 .. toctree::
     :hidden:
 
+    deployment/symfonycloud
     deployment/platform-sh
-    deployment/platform-sh-advanced
     deployment/cloudways
     deployment/cron-jobs
 
@@ -110,7 +122,6 @@ Configuration
 
     configuration/disabling-shop-admin-api
     configuration/installation-commands
-    configuration/extending-bundles-other-em
     configuration/disabling-admin-notifications
 
 .. include:: /cookbook/configuration/map.rst.inc
@@ -122,5 +133,6 @@ Frontend
     :hidden:
 
     frontend/admin-js-and-css
+    frontend/google-analytics.rst
 
 .. include:: /cookbook/frontend/map.rst.inc

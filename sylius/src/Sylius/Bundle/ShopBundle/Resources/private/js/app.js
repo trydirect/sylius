@@ -10,6 +10,7 @@
 import 'semantic-ui-css/components/popup';
 import 'semantic-ui-css/components/rating';
 import $ from 'jquery';
+import 'slick-carousel';
 
 import 'sylius/ui/app';
 import 'sylius/ui/sylius-api-login';
@@ -18,11 +19,12 @@ import 'sylius/ui/sylius-api-toggle';
 import './sylius-add-to-cart';
 import './sylius-address-book';
 import './sylius-province-field';
-import './sylius-remove-from-cart';
 import './sylius-variant-images';
 import './sylius-variants-prices';
 
 $(document).ready(() => {
+  $('.popup-js').popup();
+
   $('.cart.button')
     .popup({
       popup: $('.cart.popup'),
@@ -67,7 +69,6 @@ $(document).ready(() => {
     throttle: 500,
   });
 
-  $('.sylius-cart-remove-button').removeFromCart();
   $('#sylius-product-adding-to-cart').addToCart();
 
   $('#sylius-shipping-address').addressBook();
@@ -75,4 +76,15 @@ $(document).ready(() => {
   $(document).provinceField();
   $(document).variantPrices();
   $(document).variantImages();
+
+  $('body').find('input[autocomplete="off"]').prop('autocomplete', 'disable');
+
+  $('.carousel').slick({
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    prevArrow: $('.carousel-left'),
+    nextArrow: $('.carousel-right'),
+    appendArrows: false
+  });
 });

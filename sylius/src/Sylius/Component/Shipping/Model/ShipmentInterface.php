@@ -20,8 +20,11 @@ use Sylius\Component\Resource\Model\TimestampableInterface;
 interface ShipmentInterface extends ResourceInterface, ShippingSubjectInterface, TimestampableInterface
 {
     public const STATE_CART = 'cart';
+
     public const STATE_READY = 'ready';
+
     public const STATE_SHIPPED = 'shipped';
+
     public const STATE_CANCELLED = 'cancelled';
 
     public function getState(): ?string;
@@ -34,6 +37,8 @@ interface ShipmentInterface extends ResourceInterface, ShippingSubjectInterface,
 
     /**
      * @return Collection|ShipmentUnitInterface[]
+     *
+     * @psalm-return Collection<array-key, ShipmentUnitInterface>
      */
     public function getUnits(): Collection;
 
@@ -48,4 +53,8 @@ interface ShipmentInterface extends ResourceInterface, ShippingSubjectInterface,
     public function setTracking(?string $tracking): void;
 
     public function isTracked(): bool;
+
+    public function getShippedAt(): ?\DateTimeInterface;
+
+    public function setShippedAt(?\DateTimeInterface $shippedAt): void;
 }

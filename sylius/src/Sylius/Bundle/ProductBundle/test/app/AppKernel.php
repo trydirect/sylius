@@ -19,7 +19,6 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use PSS\SymfonyMockerContainer\DependencyInjection\MockerContainer;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -34,7 +33,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new winzou\Bundle\StateMachineBundle\winzouStateMachineBundle(),
             new FOS\RestBundle\FOSRestBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle($this),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
@@ -42,7 +41,6 @@ class AppKernel extends Kernel
             new Sylius\Bundle\LocaleBundle\SyliusLocaleBundle(),
             new Sylius\Bundle\ProductBundle\SyliusProductBundle(),
             new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
-            new Symfony\Bundle\TwigBundle\TwigBundle(),
         ];
     }
 
@@ -52,17 +50,5 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load(__DIR__ . '/config/config.yml');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getContainerBaseClass(): string
-    {
-        if (0 === strpos($this->environment, 'test')) {
-            return MockerContainer::class;
-        }
-
-        return parent::getContainerBaseClass();
     }
 }

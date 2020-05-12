@@ -220,6 +220,22 @@ final class ManagingProductsContext implements Context
     }
 
     /**
+     * @When I choose to show this product in the :channel channel
+     */
+    public function iChooseToShowThisProductInTheChannel(string $channel): void
+    {
+        $this->updateSimpleProductPage->showProductInChannel($channel);
+    }
+
+    /**
+     * @When I choose to show this product in this channel
+     */
+    public function iChooseToShowThisProductInThisChannel(): void
+    {
+        $this->updateSimpleProductPage->showProductInSingleChannel();
+    }
+
+    /**
      * @When I enable slug modification
      * @When I enable slug modification in :localeCode
      */
@@ -865,9 +881,9 @@ final class ManagingProductsContext implements Context
     /**
      * @When I set the position of :productName to :position
      */
-    public function iSetThePositionOfTo($productName, $position)
+    public function iSetThePositionOfTo(string $productName, string $position): void
     {
-        $this->indexPerTaxonPage->setPositionOfProduct($productName, (int) $position);
+        $this->indexPerTaxonPage->setPositionOfProduct($productName, $position);
     }
 
     /**
@@ -985,6 +1001,41 @@ final class ManagingProductsContext implements Context
     public function iShouldBeOnTheVariantGenerationPageForThisProduct(ProductInterface $product): void
     {
         Assert::true($this->variantGeneratePage->isOpen(['productId' => $product->getId()]));
+    }
+
+    /**
+     * @Then I should see inventory of this product
+     */
+    public function iShouldSeeInventoryOfThisProduct(): void
+    {
+        Assert::true($this->updateSimpleProductPage->hasInventoryTab());
+    }
+
+    /**
+     * @Then I should not see inventory of this product
+     */
+    public function iShouldNotSeeInventoryOfThisProduct(): void
+    {
+        Assert::false($this->updateConfigurableProductPage->hasInventoryTab());
+    }
+
+    /**
+     * @Then I should be notified that the position :invalidPosition is invalid
+     */
+    public function iShouldBeNotifiedThatThePositionIsInvalid(string $invalidPosition): void
+    {
+        $this->notificationChecker->checkNotification(
+            sprintf('The position "%s" is invalid.', $invalidPosition),
+            NotificationType::failure()
+        );
+    }
+
+    /**
+     * @Then I should not be able to show this product in shop
+     */
+    public function iShouldNotBeAbleToShowThisProductInShop(): void
+    {
+        Assert::true($this->updateSimpleProductPage->isShowInShopButtonDisabled());
     }
 
     /**

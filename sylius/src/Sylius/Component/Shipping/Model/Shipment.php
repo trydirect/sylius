@@ -27,17 +27,25 @@ class Shipment implements ShipmentInterface
     /** @var string */
     protected $state = ShipmentInterface::STATE_CART;
 
-    /** @var ShippingMethodInterface */
+    /** @var ShippingMethodInterface|null */
     protected $method;
 
-    /** @var Collection|ShipmentUnitInterface[] */
+    /**
+     * @var Collection|ShipmentUnitInterface[]
+     *
+     * @psalm-var Collection<array-key, ShipmentUnitInterface>
+     */
     protected $units;
 
-    /** @var string */
+    /** @var string|null */
     protected $tracking;
+
+    /** @var \DateTimeInterface|null */
+    protected $shippedAt;
 
     public function __construct()
     {
+        /** @var ArrayCollection<array-key, ShipmentUnitInterface> $this->units */
         $this->units = new ArrayCollection();
         $this->createdAt = new \DateTime();
     }
@@ -154,6 +162,7 @@ class Shipment implements ShipmentInterface
      */
     public function getShippables(): Collection
     {
+        /** @var ArrayCollection<array-key, ShippableInterface> $shippables */
         $shippables = new ArrayCollection();
 
         foreach ($this->units as $unit) {
@@ -208,5 +217,15 @@ class Shipment implements ShipmentInterface
     public function getShippingUnitTotal(): int
     {
         return 0;
+    }
+
+    public function getShippedAt(): ?\DateTimeInterface
+    {
+        return $this->shippedAt;
+    }
+
+    public function setShippedAt(?\DateTimeInterface $shippedAt): void
+    {
+        $this->shippedAt = $shippedAt;
     }
 }

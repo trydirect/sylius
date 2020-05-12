@@ -2,7 +2,7 @@ Installation
 ============
 
 So you want to try creating an online shop with Sylius? Great! The first step is the most important one, so let's start
-with the Sylius project installation via Composer. We will be using the latest stable version of Sylius - ``1.5``.
+with the Sylius project installation via Composer. We will be using the latest stable version of Sylius - ``1.6``.
 
 Before installation
 -------------------
@@ -24,7 +24,7 @@ The easiest way to install Sylius on your local machine is to use the following 
 
 .. code-block:: bash
 
-    $ composer create-project sylius/sylius-standard MyFirstShop
+    composer create-project sylius/sylius-standard MyFirstShop
 
 It will create a ``MyFirstShop`` directory with a brand new Sylius application inside.
 
@@ -38,8 +38,8 @@ Run the Sylius installation command to do that.
 
 .. code-block:: bash
 
-    $ cd MyFirstShop
-    $ bin/console sylius:install
+    cd MyFirstShop
+    bin/console sylius:install
 
 This command will do several things for you - the first two steps are checking if your environment fulfills technical requirements,
 and setting the project database. You will also be asked if you want to have default fixtures loaded into your database - let's say
@@ -56,21 +56,21 @@ To derive joy from Sylius SemanticUI-based views, you should use ``yarn`` to loa
 
 .. code-block:: bash
 
-    $ yarn install
-    $ yarn build
+    yarn install
+    yarn build
 
 That's it! You're ready to launch your empty Sylius-based web store.
 
 Launching application
 ---------------------
 
-For the testing reasons, the fastest way to start the application is using Symfony built-in server. Let's also start
+For the testing reasons, the fastest way to start the application is using Symfony binary. It can be downloaded from `here <https://symfony.com/download>`_. Let's also start
 browsing the application from the Admin panel.
 
 .. code-block:: bash
 
-    $ bin/console server:start
-    $ open http://127.0.0.1:8000/admin
+    symfony serve
+    open http://127.0.0.1:8000/admin
 
 Great! You are closer to the final goal. Let's configure your application a little bit, to make it usable by some future customers.
 
@@ -78,3 +78,4 @@ Learn more
 ##########
 
 * :doc:`Installation chapter in The Book </book/installation/index>`
+

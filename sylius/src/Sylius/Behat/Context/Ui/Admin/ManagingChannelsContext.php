@@ -103,6 +103,30 @@ final class ManagingChannelsContext implements Context
     }
 
     /**
+     * @When I choose :firstCountry and :secondCountry as operating countries
+     */
+    public function iChooseOperatingCountries(string ...$countries): void
+    {
+        $this->createPage->chooseOperatingCountries($countries);
+    }
+
+    /**
+     * @When I specify menu taxon as :menuTaxon
+     */
+    public function iSpecifyMenuTaxonAs(string $menuTaxon): void
+    {
+        $this->createPage->specifyMenuTaxon($menuTaxon);
+    }
+
+    /**
+     * @When I change its menu taxon to :menuTaxon
+     */
+    public function iChangeItsMenuTaxonTo(string $menuTaxon): void
+    {
+        $this->updatePage->changeMenuTaxon($menuTaxon);
+    }
+
+    /**
      * @When I allow to skip shipping step if only one shipping method is available
      */
     public function iAllowToSkipShippingStepIfOnlyOneShippingMethodIsAvailable()
@@ -234,10 +258,11 @@ final class ManagingChannelsContext implements Context
     }
 
     /**
-     * @Given I want to modify a channel :channel
-     * @Given /^I want to modify (this channel)$/
+     * @Given I am modifying a channel :channel
+     * @When I want to modify a channel :channel
+     * @When /^I want to modify (this channel)$/
      */
-    public function iWantToModifyChannel(ChannelInterface $channel)
+    public function iWantToModifyChannel(ChannelInterface $channel): void
     {
         $this->updatePage->open(['id' => $channel->getId()]);
     }
@@ -371,14 +396,14 @@ final class ManagingChannelsContext implements Context
     }
 
     /**
-     * @When I make it available in :locale
+     * @When I make it available (only) in :locale
      */
-    public function iMakeItAvailableIn($locale)
+    public function iMakeItAvailableIn(string $localeName): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
 
-        $currentPage->chooseLocale($locale);
+        $currentPage->chooseLocale($localeName);
     }
 
     /**
@@ -478,6 +503,30 @@ final class ManagingChannelsContext implements Context
     public function theBaseCurrencyFieldShouldBeDisabled()
     {
         Assert::true($this->updatePage->isBaseCurrencyDisabled());
+    }
+
+    /**
+     * @Then I should be notified that the default locale has to be enabled
+     */
+    public function iShouldBeNotifiedThatTheDefaultLocaleHasToBeEnabled(): void
+    {
+        Assert::same(
+            $this->updatePage->getValidationMessage('default_locale'),
+            'Default locale has to be enabled.'
+        );
+    }
+
+    /**
+     * @Given /^(this channel) menu taxon should be "([^"]+)"$/
+     * @Given the channel :channel should have :menuTaxon as a menu taxon
+     */
+    public function thisChannelMenuTaxonShouldBe(ChannelInterface $channel, string $menuTaxon): void
+    {
+        if (!$this->updatePage->isOpen(['id' => $channel->getId()])) {
+            $this->updatePage->open(['id' => $channel->getId()]);
+        }
+
+        Assert::same($this->updatePage->getMenuTaxon(), $menuTaxon);
     }
 
     /**

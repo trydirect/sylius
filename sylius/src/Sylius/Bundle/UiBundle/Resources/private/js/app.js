@@ -21,6 +21,7 @@ import './sylius-bulk-action-require-confirmation';
 import './sylius-form-collection';
 import './sylius-require-confirmation';
 import './sylius-toggle';
+import './sylius-check-all';
 
 $(document).ready(() => {
   $('#sidebar').addClass('visible');
@@ -54,10 +55,16 @@ $(document).ready(() => {
   $('[data-requires-confirmation]').requireConfirmation();
   $('[data-bulk-action-requires-confirmation]').bulkActionRequireConfirmation();
   $('[data-toggles]').toggleElement();
+  $('[data-js-bulk-checkboxes]').checkAll();
 
   $('.special.cards .image').dimmer({
     on: 'hover',
   });
 
   $('[data-form-type="collection"]').CollectionForm();
+
+  $('[data-js-disable]').on('click', (e) => {
+    const $current = $(e.currentTarget);
+    $(document).find($current.attr('data-js-disable')).not($current).addClass('disabled').prop('disabled', true);
+  });
 });

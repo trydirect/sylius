@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sylius\Behat\Page\Admin\Crud;
 
+use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Session;
@@ -135,8 +136,15 @@ class IndexPage extends SymfonyPage implements IndexPageInterface
 
     public function bulkDelete(): void
     {
-        $this->getElement('bulk_actions', ['%text%' => 'Bulk actions'])->pressButton('Delete');
-        $this->getElement('confirmation_button')->click();
+        $this->getElement('bulk_actions')->pressButton('Delete');
+        if ($this->getDriver() instanceof Selenium2Driver) {
+            $this->getElement('confirmation_button')->click();
+        }
+    }
+
+    public function sort(string $order): void
+    {
+        $this->getDocument()->clickLink($order);
     }
 
     public function getRouteName(): string
@@ -152,7 +160,7 @@ class IndexPage extends SymfonyPage implements IndexPageInterface
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
-            'bulk_actions' => '.accordion:contains("%text%")',
+            'bulk_actions' => '.sylius-grid-nav__bulk',
             'confirmation_button' => '#confirmation-button',
             'filter' => 'button:contains("Filter")',
             'table' => '.table',

@@ -39,6 +39,11 @@
             <tag name="doctrine.event_listener" event="onFlush" lazy="true" />
             <tag name="doctrine.event_listener" event="postFlush" lazy="true" />
         </service>
+        <service id="sylius.listener.avatar_upload" class="Sylius\Bundle\CoreBundle\EventListener\ImageUploadListener">
+            <argument type="service" id="sylius.image_uploader" />
+            <tag name="kernel.event_listener" event="sylius.admin_user.pre_create" method="uploadImage" />
+            <tag name="kernel.event_listener" event="sylius.admin_user.pre_update" method="uploadImage" />
+        </service>
         <service id="sylius.listener.order_recalculation" class="Sylius\Bundle\CoreBundle\EventListener\OrderRecalculationListener">
             <argument type="service" id="sylius.order_processing.order_processor" />
             <tag name="kernel.event_listener" event="sylius.cart_change" method="recalculateOrder" />
@@ -93,8 +98,10 @@
 
         <service id="sylius.listener.taxon_deletion" class="Sylius\Bundle\CoreBundle\EventListener\TaxonDeletionListener">
             <argument type="service" id="session" />
+            <argument type="service" id="sylius.repository.channel" />
             <argument type="service" id="sylius.promotion_rule_updater.total_of_items_from_taxon" />
             <argument type="service" id="sylius.promotion_rule_updater.has_taxon" />
+            <tag name="kernel.event_listener" event="sylius.taxon.pre_delete" method="protectFromRemovingMenuTaxon" />
             <tag name="kernel.event_listener" event="sylius.taxon.post_delete" method="removeTaxonFromPromotionRules" />
         </service>
     </services>

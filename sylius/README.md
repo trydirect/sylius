@@ -1,10 +1,10 @@
 <h1 align="center">
-    <a href="https://sylius.com" target="_blank">
-        <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
+    <a href="https://sylius.com/github-readme/link/" target="_blank">
+        <img src="https://sylius.com/assets/github-readme.png" />
     </a>
 </h1>
 
-Sylius is an Open Source eCommerce Framework on top of [**Symfony**](https://symfony.com). 
+Sylius is an Open Source eCommerce platform on top of [**Symfony**](https://symfony.com). 
 
 The highest quality of code, strong testing culture, built-in Agile (BDD) workflow and exceptional flexibility make it the best solution for application tailored to your business requirements. 
 Powerful REST API allows for easy integrations and creating unique customer experience on any device.
@@ -74,7 +74,7 @@ Sylius Plus gives you all the power of Open Source and much more. It comes with 
 - Returns Management
 - Multi-source Inventory
 - Advanced Users Permissions
-- Enhanced security & monitoring
+- Partial Shipment
 
 What is more, Sylius Plus means SLA-backed support and Project Success Assistance from its creators. [Learn more.](https://sylius.com/plus/)
 

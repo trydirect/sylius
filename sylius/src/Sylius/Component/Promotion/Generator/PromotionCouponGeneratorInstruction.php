@@ -18,13 +18,19 @@ final class PromotionCouponGeneratorInstruction implements PromotionCouponGenera
     /** @var int */
     private $amount = 5;
 
+    /** @var string|null */
+    private $prefix;
+
     /** @var int */
     private $codeLength = 6;
 
-    /** @var \DateTimeInterface */
+    /** @var string|null */
+    private $suffix;
+
+    /** @var \DateTimeInterface|null */
     private $expiresAt;
 
-    /** @var int */
+    /** @var int|null */
     private $usageLimit;
 
     /**
@@ -43,6 +49,16 @@ final class PromotionCouponGeneratorInstruction implements PromotionCouponGenera
         $this->amount = $amount;
     }
 
+    public function getPrefix(): ?string
+    {
+        return $this->prefix;
+    }
+
+    public function setPrefix(?string $prefix): void
+    {
+        $this->prefix = $prefix;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -57,6 +73,16 @@ final class PromotionCouponGeneratorInstruction implements PromotionCouponGenera
     public function setCodeLength(?int $codeLength): void
     {
         $this->codeLength = $codeLength;
+    }
+
+    public function getSuffix(): ?string
+    {
+        return $this->suffix;
+    }
+
+    public function setSuffix(?string $suffix): void
+    {
+        $this->suffix = $suffix;
     }
 
     /**

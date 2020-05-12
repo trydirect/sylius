@@ -21,7 +21,7 @@ script:
 notifications:
   slack:
     rooms:
-    - optimum-team:GycletOWK4Kt95GktwYwfUMp#build
+    - optimum-team:"$SLACK"#build
   webhooks:
     urls:
       - https://webhooks.gitter.im/e/0aa6221439383fa972ab

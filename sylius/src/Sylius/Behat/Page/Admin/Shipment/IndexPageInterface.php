@@ -19,9 +19,17 @@ interface IndexPageInterface extends BaseIndexPageInterface
 {
     public function chooseStateToFilter(string $shipmentState): void;
 
+    public function chooseChannelFilter(string $channelName): void;
+
+    public function isShipmentWithOrderNumberInPosition(string $orderNumber, int $position): bool;
+
     public function shipShipmentOfOrderWithNumber(string $orderNumber): void;
 
     public function getShipmentStatusByOrderNumber(string $orderNumber): string;
 
-    public function showOrderPageForNthShipment(int $shipmentNumber): void;
+    public function showOrderPageForNthShipment(int $position): void;
+
+    public function shipShipmentOfOrderWithTrackingCode(string $orderNumber, string $trackingCode): void;
+
+    public function getShippedAtDate(string $orderNumber): string;
 }

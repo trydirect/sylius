@@ -19,7 +19,7 @@ Results in the following routes:
 
 .. code-block:: bash
 
-    $ php bin/console debug:router
+    php bin/console debug:router
 
     ------------------------ --------------- -------- ------ -------------------------
     Name                     Method          Scheme   Host   Path
@@ -47,7 +47,7 @@ Results in the following routes:
 
 .. code-block:: bash
 
-    $ php bin/console debug:router
+    php bin/console debug:router
 
     ------------------------ --------------- -------- ------ -------------------------
     Name                     Method          Scheme   Host   Path
@@ -74,7 +74,7 @@ Results in the following routes:
 
 .. code-block:: bash
 
-    $ php bin/console debug:router
+    php bin/console debug:router
 
     ------------------------ --------------- -------- ------ -------------------------
     Name                     Method          Scheme   Host   Path
@@ -102,7 +102,7 @@ Results in the following routes:
 
 .. code-block:: bash
 
-    $ php bin/console debug:router
+    php bin/console debug:router
 
     ------------------------ --------------- -------- ------ -------------------------
     Name                     Method          Scheme   Host   Path
@@ -128,7 +128,7 @@ Results in the following routes:
 
 .. code-block:: bash
 
-    $ php bin/console debug:router
+    php bin/console debug:router
 
     ------------------------ --------------- -------- ------ -------------------------
     Name                     Method          Scheme   Host   Path
@@ -162,7 +162,7 @@ The generation results in the following routes:
 
 .. code-block:: bash
 
-    $ php bin/console debug:router
+    php bin/console debug:router
 
     ------------------------ --------------- -------- ------ -------------------------
     Name                     Method          Scheme   Host   Path
@@ -193,10 +193,10 @@ You can easily change that per route, but it is also easy when you generate the 
 
 Following templates will be used for actions:
 
-* ``:app/Resources/views/Admin/Book:show.html.twig``
-* ``:app/Resources/views/Admin/Book:index.html.twig``
-* ``:app/Resources/views/Admin/Book:create.html.twig``
-* ``:app/Resources/views/Admin/Book:update.html.twig``
+* ``:templates/Admin/Book:show.html.twig``
+* ``:templates/Admin/Book:index.html.twig``
+* ``:templates/Admin/Book:create.html.twig``
+* ``:templates/Admin/Book:update.html.twig``
 
 Using a Custom Form
 -------------------
@@ -211,7 +211,7 @@ If you want to use a custom form:
             form: App/Form/Type/AdminBookType
         type: sylius.resource
 
-``create`` and ``update`` actions will use App/Form/Type/AdminBookType form type.
+``create`` and ``update`` actions will use ``App/Form/Type/AdminBookType`` form type.
 
 .. note::
 
@@ -280,7 +280,7 @@ Which will result in the following routes:
 
 .. code-block:: bash
 
-    $ php bin/console debug:router
+    php bin/console debug:router
 
     ------------------------ --------------- -------- ------ ---------------------------------------
     Name                     Method          Scheme   Host   Path
@@ -312,7 +312,7 @@ Which will result in the following routes:
 
 .. code-block:: bash
 
-    $ php bin/console debug:router
+    php bin/console debug:router
 
     ------------------------ --------------- -------- ------ -------------------------
     Name                     Method          Scheme   Host   Path

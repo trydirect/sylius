@@ -321,14 +321,14 @@ final class ManagingProductVariantsContext implements Context
     }
 
     /**
-     * @Then I should be notified that price cannot be lower than 0.01
+     * @Then I should be notified that price cannot be lower than 0
      */
-    public function iShouldBeNotifiedThatPriceCannotBeLowerThen()
+    public function iShouldBeNotifiedThatPriceCannotBeLowerThen(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
 
-        Assert::contains($currentPage->getPricesValidationMessage(), 'Price must be at least 0.01.');
+        Assert::contains($currentPage->getPricesValidationMessage(), 'Price cannot be lower than 0.');
     }
 
     /**
@@ -384,6 +384,22 @@ final class ManagingProductVariantsContext implements Context
             $this->createPage->getPricesValidationMessage(),
             'You must define price for every channel.'
         );
+    }
+
+    /**
+     * @When I choose to show this product in the :channel channel
+     */
+    public function iChooseToShowThisProductInTheChannel(string $channel): void
+    {
+        $this->updatePage->showProductInChannel($channel);
+    }
+
+    /**
+     * @When I choose to show this product in this channel
+     */
+    public function iChooseToShowThisProductInThisChannel(): void
+    {
+        $this->updatePage->showProductInSingleChannel();
     }
 
     /**
@@ -541,6 +557,14 @@ final class ManagingProductVariantsContext implements Context
     public function iTryToGenerateNewVariantsForThisProduct(ProductInterface $product): void
     {
         $this->generatePage->open(['productId' => $product->getId()]);
+    }
+
+    /**
+     * @Then I should not be able to show this product in shop
+     */
+    public function iShouldNotBeAbleToShowThisProductInShop(): void
+    {
+        Assert::true($this->updatePage->isShowInShopButtonDisabled());
     }
 
     /**

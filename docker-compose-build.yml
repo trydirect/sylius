@@ -8,7 +8,7 @@ volumes:
 services:
 
   php:
-    image: trydirect/sylius:1.5.2
+    image: trydirect/sylius:1.7.3
     build: dockerfiles/php
     restart: always
     container_name: php

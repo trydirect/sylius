@@ -26,17 +26,23 @@ class TaxCategory implements TaxCategoryInterface
 
     /** @var string */
     protected $code;
+
     /** @var string */
     protected $name;
 
     /** @var string */
     protected $description;
 
-    /** @var Collection|TaxRateInterface[] */
+    /**
+     * @var Collection|TaxRateInterface[]
+     *
+     * @psalm-var Collection<array-key, TaxRateInterface>
+     */
     protected $rates;
 
     public function __construct()
     {
+        /** @var ArrayCollection<array-key, TaxRateInterface> $this->rates */
         $this->rates = new ArrayCollection();
         $this->createdAt = new \DateTime();
     }

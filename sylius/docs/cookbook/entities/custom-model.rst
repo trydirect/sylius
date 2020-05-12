@@ -27,13 +27,13 @@ With the Generator Bundle
 
 .. code-block:: bash
 
-    $ php bin/console generate:doctrine:entity
+    php bin/console generate:doctrine:entity
 
 With the Maker Bundle
 
 .. code-block:: bash
 
-    $ php bin/console make:entity
+    php bin/console make:entity
 
 The generator will ask you for the entity name and fields. See how it should look like to match our assumptions.
 
@@ -47,14 +47,14 @@ Assuming that your database was up-to-date before adding the new entity, run:
 
 .. code-block:: bash
 
-    $ php bin/console doctrine:migrations:diff
+    php bin/console doctrine:migrations:diff
 
 This will generate a new migration file which adds the Supplier entity to your database.
 Then update the database using the generated migration:
 
 .. code-block:: bash
 
-    $ php bin/console doctrine:migrations:migrate
+    php bin/console doctrine:migrations:migrate
 
 4. Add ResourceInterface to your model class
 --------------------------------------------
@@ -77,19 +77,11 @@ Go to the generated class file and make it implement the ``ResourceInterface``:
 5. Register your entity as a Sylius resource
 --------------------------------------------
 
-If you don't have it yet create a file ``app/config/resources.yml``, import it in the ``app/config/config.yml``.
+If you don't have it yet, create a file ``config/packages/sylius_resource.yaml``.
 
 .. code-block:: yaml
 
-    # config/services.yaml
-    imports:
-        - { resource: "resources.yaml" }
-
-And add these few lines in the ``resources.yaml`` file:
-
-.. code-block:: yaml
-
-    # config/resources.yaml
+    # config/packages/sylius_resource.yaml
     sylius_resource:
         resources:
             app.supplier:
@@ -101,7 +93,7 @@ To check if the process was run correctly run such a command:
 
 .. code-block:: bash
 
-    $ php bin/console debug:container | grep supplier
+    php bin/console debug:container | grep supplier
 
 The output should be:
 
@@ -159,16 +151,14 @@ To have templates for your Entity administration out of the box you can use Grid
 
 Having a grid prepared we can configure routing for the entity administration:
 
-Create the ``app/config/routing/admin/supplier.yml`` file. Include it in the ``app/config/routing/admin.yml``, which
-should be also included in the ``config/routes.yaml``.
-
 .. code-block:: yaml
 
-    # app/config/routing/admin/supplier.yml
+    # config/routes.yaml
     app_admin_supplier:
         resource: |
             alias: app.supplier
             section: admin
+            path: admin
             templates: SyliusAdminBundle:Crud
             redirect: update
             grid: app_admin_supplier
@@ -178,19 +168,6 @@ should be also included in the ``config/routes.yaml``.
                 index:
                     icon: 'file image outline'
         type: sylius.resource
-
-.. code-block:: yaml
-
-    # app/config/routing/admin.yml
-    app_admin_supplier:
-        resource: 'admin/supplier.yml'
-
-.. code-block:: yaml
-
-    # config/routes.yaml
-    app_admin:
-        resource: 'routing/admin.yml'
-        prefix: /admin
 
 9. Add entity administration to the admin menu
 ----------------------------------------------

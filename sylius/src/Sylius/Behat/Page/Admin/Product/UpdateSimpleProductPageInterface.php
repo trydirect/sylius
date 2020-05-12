@@ -100,4 +100,12 @@ interface UpdateSimpleProductPageInterface extends BaseUpdatePageInterface
     public function goToVariantCreation(): void;
 
     public function goToVariantGeneration(): void;
+
+    public function hasInventoryTab(): bool;
+
+    public function isShowInShopButtonDisabled(): bool;
+
+    public function showProductInChannel(string $channel): void;
+
+    public function showProductInSingleChannel(): void;
 }

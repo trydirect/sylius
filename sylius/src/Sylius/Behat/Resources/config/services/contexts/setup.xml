@@ -24,6 +24,9 @@
             <argument type="service" id="sylius.behat.shared_storage" />
             <argument type="service" id="sylius.fixture.example_factory.admin_user" />
             <argument type="service" id="sylius.repository.admin_user" />
+            <argument type="service" id="sylius.image_uploader" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="behat.mink.parameters" />
         </service>
 
         <service id="sylius.behat.context.setup.channel" class="Sylius\Behat\Context\Setup\ChannelContext">
@@ -84,15 +87,19 @@
 
         <service id="sylius.behat.context.setup.order" class="Sylius\Behat\Context\Setup\OrderContext">
             <argument type="service" id="sylius.behat.shared_storage" />
-            <argument type="service" id="sylius.repository.order" />
             <argument type="service" id="sylius.factory.order" />
-            <argument type="service" id="sylius.factory.order_item" />
-            <argument type="service" id="sylius.order_item_quantity_modifier" />
+            <argument type="service" id="sylius.factory.address" />
             <argument type="service" id="sylius.factory.customer" />
-            <argument type="service" id="sylius.repository.customer" />
-            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="sylius.factory.order_item" />
             <argument type="service" id="sm.factory" />
+            <argument type="service" id="sylius.repository.country" />
+            <argument type="service" id="sylius.repository.customer" />
+            <argument type="service" id="sylius.repository.order" />
+            <argument type="service" id="sylius.repository.payment_method" />
+            <argument type="service" id="sylius.repository.shipping_method" />
             <argument type="service" id="sylius.product_variant_resolver.default" />
+            <argument type="service" id="sylius.order_item_quantity_modifier" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
 
         <service id="sylius.behat.context.setup.payment" class="Sylius\Behat\Context\Setup\PaymentContext">
@@ -106,6 +113,7 @@
                 <argument key="paypal_express_checkout">Paypal Express Checkout</argument>
                 <argument key="stripe_checkout">Stripe Checkout</argument>
             </argument>
+
         </service>
 
         <service id="sylius.behat.context.setup.product" class="Sylius\Behat\Context\Setup\ProductContext">
@@ -172,6 +180,7 @@
             <argument type="service" id="sylius.factory.promotion_rule" />
             <argument type="service" id="sylius.test.factory.promotion" />
             <argument type="service" id="sylius.repository.promotion" />
+            <argument type="service" id="sylius.promotion_coupon_generator" />
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
 
@@ -244,6 +253,10 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="sylius.factory.zone" />
             <argument type="service" id="sylius.factory.zone_member" />
+        </service>
+
+        <service id="sylius.behat.context.setup.calendar" class="Sylius\Behat\Context\Setup\CalendarContext">
+            <argument>%kernel.project_dir%</argument>
         </service>
     </services>
 </container>

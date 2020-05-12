@@ -95,7 +95,11 @@ class User implements UserInterface
      */
     protected $roles = [UserInterface::DEFAULT_ROLE];
 
-    /** @var Collection|UserOAuth[] */
+    /**
+     * @var UserOAuthInterface[]
+     *
+     * @psalm-var Collection<array-key, UserOAuthInterface>
+     */
     protected $oauthAccounts;
 
     /** @var string|null */
@@ -110,7 +114,10 @@ class User implements UserInterface
     public function __construct()
     {
         $this->salt = base_convert(bin2hex(random_bytes(20)), 16, 36);
+
+        /** @var ArrayCollection<array-key, UserOAuthInterface> $this->oauthAccounts */
         $this->oauthAccounts = new ArrayCollection();
+
         $this->createdAt = new \DateTime();
 
         // Set here to overwrite default value from trait
@@ -298,9 +305,6 @@ class User implements UserInterface
         $this->emailVerificationToken = $verificationToken;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPasswordResetToken(): ?string
     {
         return $this->passwordResetToken;

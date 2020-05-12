@@ -20,7 +20,9 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 interface ZoneInterface extends ResourceInterface, CodeAwareInterface
 {
     public const TYPE_COUNTRY = 'country';
+
     public const TYPE_PROVINCE = 'province';
+
     public const TYPE_ZONE = 'zone';
 
     /**
@@ -42,6 +44,8 @@ interface ZoneInterface extends ResourceInterface, CodeAwareInterface
 
     /**
      * @return Collection|ZoneMemberInterface[]
+     *
+     * @psalm-return Collection<array-key, ZoneMemberInterface>
      */
     public function getMembers(): Collection;
 

@@ -15,9 +15,9 @@ namespace Sylius\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Sylius\Behat\NotificationType;
-use Sylius\Behat\Page\Admin\Crud\IndexPageInterface;
 use Sylius\Behat\Page\Admin\PromotionCoupon\CreatePageInterface;
 use Sylius\Behat\Page\Admin\PromotionCoupon\GeneratePageInterface;
+use Sylius\Behat\Page\Admin\PromotionCoupon\IndexPageInterface;
 use Sylius\Behat\Page\Admin\PromotionCoupon\UpdatePageInterface;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
@@ -88,20 +88,36 @@ final class ManagingPromotionCouponsContext implements Context
     }
 
     /**
-     * @Given /^I want to generate a new coupons for (this promotion)$/
+     * @When /^I want to generate new coupons for (this promotion)$/
      */
-    public function iWantToGenerateANewCouponsForThisPromotion(PromotionInterface $promotion)
+    public function iWantToGenerateNewCouponsForThisPromotion(PromotionInterface $promotion)
     {
         $this->generatePage->open(['promotionId' => $promotion->getId()]);
     }
 
     /**
-     * @When /^I specify its code length as (\d+)$/
-     * @When I do not specify its code length
+     * @When /^I specify their code length as (\d+)$/
+     * @When I do not specify their code length
      */
-    public function iSpecifyItsCodeLengthAs($codeLength = null)
+    public function iSpecifyTheirCodeLengthAs(?int $codeLength = null): void
     {
-        $this->generatePage->specifyCodeLength($codeLength ?? '');
+        $this->generatePage->specifyCodeLength($codeLength);
+    }
+
+    /**
+     * @When I specify their prefix as :prefix
+     */
+    public function specifyPrefixAs(string $prefix): void
+    {
+        $this->generatePage->specifyPrefix($prefix);
+    }
+
+    /**
+     * @When I specify their suffix as :suffix
+     */
+    public function specifySuffixAs(string $suffix): void
+    {
+        $this->generatePage->specifySuffix($suffix);
     }
 
     /**
@@ -148,10 +164,11 @@ final class ManagingPromotionCouponsContext implements Context
     /**
      * @When I specify its amount as :amount
      * @When I do not specify its amount
+     * @When I choose the amount of :amount coupons to be generated
      */
-    public function iSpecifyItsAmountAs($amount = null)
+    public function iSpecifyItsAmountAs(?int $amount = null): void
     {
-        $this->generatePage->specifyAmount($amount ?? '');
+        $this->generatePage->specifyAmount($amount);
     }
 
     /**
@@ -205,7 +222,9 @@ final class ManagingPromotionCouponsContext implements Context
 
     /**
      * @When I generate it
+     * @When I generate these coupons
      * @When I try to generate it
+     * @When I try to generate these coupons
      */
     public function iGenerateIt()
     {
@@ -239,13 +258,35 @@ final class ManagingPromotionCouponsContext implements Context
     }
 
     /**
-     * @Then /^there should be (\d+) coupon related to (this promotion)$/
+     * @Then /^there should be (0|1) coupon related to (this promotion)$/
+     * @Then /^there should be (\b(?![01]\b)\d{1,9}\b) coupons related to (this promotion)$/
+     * @Then /^there should still be (\d+) coupons related to (this promotion)$/
      */
-    public function thereShouldBeCouponRelatedTo($number, PromotionInterface $promotion)
+    public function thereShouldBeCouponRelatedTo(int $number, PromotionInterface $promotion): void
     {
         $this->indexPage->open(['promotionId' => $promotion->getId()]);
 
-        Assert::same($this->indexPage->countItems(), (int) $number);
+        Assert::same($this->indexPage->countItems(), $number);
+    }
+
+    /**
+     * @Then all of the coupon codes should be prefixed with :prefix
+     */
+    public function allOfTheCouponCodesShouldBePrefixedWith(string $prefix): void
+    {
+        foreach ($this->indexPage->getCouponCodes() as $couponCode) {
+            Assert::startsWith($couponCode, $prefix);
+        }
+    }
+
+    /**
+     * @Then all of the coupon codes should be suffixed with :suffix
+     */
+    public function allOfTheCouponCodesShouldBeSuffixedWith(string $suffix): void
+    {
+        foreach ($this->indexPage->getCouponCodes() as $couponCode) {
+            Assert::endsWith($couponCode, $suffix);
+        }
     }
 
     /**
@@ -372,9 +413,9 @@ final class ManagingPromotionCouponsContext implements Context
     }
 
     /**
-     * @Then I should be notified that it has been successfully generated
+     * @Then I should be notified that they have been successfully generated
      */
-    public function iShouldBeNotifiedThatItHasBeenSuccessfullyGenerated()
+    public function iShouldBeNotifiedThatTheyHaveBeenSuccessfullyGenerated(): void
     {
         $this->notificationChecker->checkNotification('Success Promotion coupons have been successfully generated.', NotificationType::success());
     }
@@ -399,13 +440,15 @@ final class ManagingPromotionCouponsContext implements Context
     }
 
     /**
-     * @Then /^I should be notified that generating (\d+) coupons with code length equal to (\d+) is not possible$/
+     * @Then I should be notified that generating :amount coupons with code length equal to :codeLength is not possible
      */
-    public function iShouldBeNotifiedThatGeneratingCouponsWithCodeLengthIsNotPossible($amount, $codeLength)
+    public function iShouldBeNotifiedThatGeneratingCouponsWithCodeLengthIsNotPossible(int $amount, int $codeLength): void
     {
-        $message = sprintf('Invalid coupons code length or coupons amount. It is not possible to generate %d unique coupons with code length equals %d. Possible generate amount is 8.', $amount, $codeLength);
-
-        Assert::true($this->generatePage->checkGenerationValidation($message));
+        Assert::true($this->generatePage->checkGenerationValidation(sprintf(
+            'Invalid coupons code length or coupons amount. It is not possible to generate %d unique coupons with code length %d.',
+            $amount,
+            $codeLength
+        )));
     }
 
     /**

@@ -48,6 +48,9 @@ sylius_admin_locale:
 sylius_admin_order:
     resource: "@SyliusAdminBundle/Resources/config/routing/order.yml"
 
+sylius_admin_payment:
+    resource: "@SyliusAdminBundle/Resources/config/routing/payment.yml"
+
 sylius_admin_payment_method:
     resource: "@SyliusAdminBundle/Resources/config/routing/payment_method.yml"
 
@@ -65,6 +68,10 @@ sylius_admin_product_option:
 
 sylius_admin_product_review:
     resource: "@SyliusAdminBundle/Resources/config/routing/product_review.yml"
+
+sylius_admin_product_taxon:
+    resource: "@SyliusAdminBundle/Resources/config/routing/product_taxon.yml"
+    prefix: /product-taxons
 
 sylius_admin_product_variant:
     resource: "@SyliusAdminBundle/Resources/config/routing/product_variant.yml"

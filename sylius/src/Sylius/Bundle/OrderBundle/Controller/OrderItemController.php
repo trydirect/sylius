@@ -216,7 +216,7 @@ class OrderItemController extends ResourceController
         return $this->get('sylius.manager.order');
     }
 
-    private function getCartItemErrors(OrderItemInterface $orderItem): ConstraintViolationListInterface
+    protected function getCartItemErrors(OrderItemInterface $orderItem): ConstraintViolationListInterface
     {
         return $this
             ->get('validator')
@@ -224,16 +224,20 @@ class OrderItemController extends ResourceController
         ;
     }
 
-    private function getAddToCartFormWithErrors(ConstraintViolationListInterface $errors, FormInterface $form): FormInterface
+    protected function getAddToCartFormWithErrors(ConstraintViolationListInterface $errors, FormInterface $form): FormInterface
     {
         foreach ($errors as $error) {
-            $form->get('cartItem')->get($error->getPropertyPath())->addError(new FormError($error->getMessage()));
+            $formSelected = empty($error->getPropertyPath())
+                ? $form->get('cartItem')
+                : $form->get('cartItem')->get($error->getPropertyPath());
+
+            $formSelected->addError(new FormError($error->getMessage()));
         }
 
         return $form;
     }
 
-    private function handleBadAjaxRequestView(RequestConfiguration $configuration, FormInterface $form): Response
+    protected function handleBadAjaxRequestView(RequestConfiguration $configuration, FormInterface $form): Response
     {
         return $this->viewHandler->handle(
             $configuration,

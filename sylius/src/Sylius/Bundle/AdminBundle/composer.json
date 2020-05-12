@@ -20,20 +20,18 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.3",
 
-        "sonata-project/intl-bundle": "^2.2",
-        "sylius/core-bundle": "^1.2",
-        "sylius/ui-bundle": "^1.2",
-        "symfony/framework-bundle": "^3.4|^4.1.1"
+        "sylius/core-bundle": "^1.6",
+        "sylius/ui-bundle": "^1.6",
+        "symfony/framework-bundle": "^4.4",
+        "twig/intl-extra": "^2.12",
+        "twig/twig": "^2.12"
     },
     "require-dev": {
         "phpspec/phpspec": "^5.0",
         "phpunit/phpunit": "^7.0",
-        "symfony/dependency-injection": "^3.4|^4.1.1"
-    },
-    "conflict": {
-        "twig/twig": "^1.0"
+        "symfony/dependency-injection": "^4.4"
     },
     "config": {
         "bin-dir": "bin"
@@ -51,7 +49,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-master": "1.5-dev"
+            "dev-master": "1.6-dev"
         }
     }
 }

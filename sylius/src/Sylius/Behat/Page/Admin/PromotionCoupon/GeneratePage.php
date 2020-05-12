@@ -39,12 +39,12 @@ class GeneratePage extends SymfonyPage implements GeneratePageInterface
         $this->getDocument()->pressButton('Generate');
     }
 
-    public function specifyAmount(string $amount): void
+    public function specifyAmount(?int $amount): void
     {
         $this->getDocument()->fillField('Amount', $amount);
     }
 
-    public function specifyCodeLength(string $codeLength): void
+    public function specifyCodeLength(?int $codeLength): void
     {
         $this->getDocument()->fillField('Code length', $codeLength);
     }
@@ -59,6 +59,16 @@ class GeneratePage extends SymfonyPage implements GeneratePageInterface
     public function setUsageLimit(int $limit): void
     {
         $this->getDocument()->fillField('Usage limit', $limit);
+    }
+
+    public function specifyPrefix(string $prefix): void
+    {
+        $this->getDocument()->fillField('Prefix', $prefix);
+    }
+
+    public function specifySuffix(string $suffix): void
+    {
+        $this->getDocument()->fillField('Suffix', $suffix);
     }
 
     public function getRouteName(): string

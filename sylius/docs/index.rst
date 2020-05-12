@@ -95,18 +95,31 @@ The Customization Guide
 
 .. include:: /customization/map.rst.inc
 
-Sylius Plugins
---------------
+Theming Guide
+-------------
 
-The collection of Sylius Plugins together with the guide on Plugins development.
+:doc:`The Theming Guide </theming/index>` is useful when trying do develop custom layout for Sylius shops.
+
+.. toctree::
+   :hidden:
+
+   theming/index
+
+.. include:: /theming/map.rst.inc
+
+Plugin Development Guide
+------------------------
+
+If you're wondering how to share awesome features you have/want to have for Sylius with the Open Source community,
+here you will find a comprehensive guide to plugins development from the idea to sharing the plugin with the world.
 Remember that you can use all the :doc:`customization techniques </customization/index>` in Plugins.
 
 .. toctree::
    :hidden:
 
-   plugins/index
+   plugin-development-guide/index
 
-.. include:: /plugins/map.rst.inc
+.. include:: /plugin-development-guide/map.rst.inc
 
 The Cookbook
 ------------

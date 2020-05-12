@@ -26,7 +26,7 @@ To begin creating your new project, run this command:
 
 .. code-block:: bash
 
-    $ composer create-project sylius/sylius-standard acme
+    composer create-project sylius/sylius-standard acme
 
 .. note::
 
@@ -36,7 +36,7 @@ This will create a new Symfony project in the ``acme`` directory. Next, move to 
 
 .. code-block:: bash
 
-    $ cd acme
+    cd acme
 
 Sylius uses environment variables to configure the connection with database and mailer services.
 You can look up the default values in ``.env`` file and customise them by creating ``.env.local`` with variables you want to override.
@@ -51,13 +51,14 @@ After everything is in place, run the following command to install Sylius:
 
 .. code-block:: bash
 
-    $ php bin/console sylius:install
+    php bin/console sylius:install
 
 .. warning::
 
     During the ``sylius:install`` command you will be asked to provide important information, but also its execution ensures
     that the default **currency** (USD) and the default **locale** (English - US) are set.
-    They can be changed later, respectively in the "Configuration > Channels" section of the admin and in the ``config/services.yaml`` file.
+    They can be changed later, respectively in the "Configuration > Channels" section of the admin and in the ``config/services.yaml`` file. If you want
+    to change these before running the installation command, set the ``locale`` and ``sylius_installer_currency`` parameters in the ``config/services.yaml`` file.
     From now on all the prices will be stored in the database in USD as integers, and all the products will have to be added with a base american english name translation.
 
 Installing assets
@@ -71,25 +72,23 @@ Having Yarn installed, go to your project directory to install the dependencies:
 
 .. code-block:: bash
 
-    $ yarn install
+    yarn install
 
 Then build the frontend assets by running:
 
 .. code-block:: bash
 
-    $ yarn build
+    yarn build
 
 Accessing the Shop
 ------------------
 
-We strongly recommend using the Symfony built-in web server by running the ``php bin/console server:start``
+We strongly recommend using the Symfony Local Web Server by running the ``symfony server:start``
 command and then accessing ``http://127.0.0.1:8000`` in your web browser to see the shop.
 
 .. note::
-
-    The localhost's 8000 port may be already occupied by some other process.
-    If that happens, please try using a different port - ``php bin/console server:start 127.0.0.1:8081``.
-    Get to know more about using a built-in server `here <http://symfony.com/doc/current/cookbook/web_server/built_in.html>`_.
+    Get to know more about using Symfony Local Web Server `in the Symfony server documentation <https://symfony.com/doc/current/setup/symfony_server.html>`_.
+    If you are using a built-in server check `here <http://symfony.com/doc/current/cookbook/web_server/built_in.html>`_.
 
 You can log to the administrator panel located at ``/admin`` with the credentials you have provided during the installation process.
 

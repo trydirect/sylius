@@ -26,7 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ShopUserExampleFactory extends AbstractExampleFactory implements ExampleFactoryInterface
 {
     /** @var FactoryInterface */
-    private $userFactory;
+    private $shopUserFactory;
 
     /** @var FactoryInterface */
     private $customerFactory;
@@ -41,11 +41,11 @@ class ShopUserExampleFactory extends AbstractExampleFactory implements ExampleFa
     private $optionsResolver;
 
     public function __construct(
-        FactoryInterface $userFactory,
+        FactoryInterface $shopUserFactory,
         FactoryInterface $customerFactory,
         RepositoryInterface $customerGroupRepository
     ) {
-        $this->userFactory = $userFactory;
+        $this->shopUserFactory = $shopUserFactory;
         $this->customerFactory = $customerFactory;
         $this->customerGroupRepository = $customerGroupRepository;
 
@@ -73,7 +73,7 @@ class ShopUserExampleFactory extends AbstractExampleFactory implements ExampleFa
         $customer->setBirthday($options['birthday']);
 
         /** @var ShopUserInterface $user */
-        $user = $this->userFactory->createNew();
+        $user = $this->shopUserFactory->createNew();
         $user->setPlainPassword($options['password']);
         $user->setEnabled($options['enabled']);
         $user->addRole('ROLE_USER');
@@ -115,13 +115,17 @@ class ShopUserExampleFactory extends AbstractExampleFactory implements ExampleFa
                 return $this->faker->dateTimeThisCentury();
             })
             ->setAllowedTypes('birthday', ['null', 'string', \DateTimeInterface::class])
-            ->setNormalizer('birthday', function (Options $options, $value) {
-                if (is_string($value)) {
-                    return \DateTime::createFromFormat('Y-m-d H:i:s', $value);
-                }
+            ->setNormalizer(
+                'birthday',
+                /** @param string|\DateTimeInterface|null $value */
+                function (Options $options, $value) {
+                    if (is_string($value)) {
+                        return \DateTime::createFromFormat('Y-m-d H:i:s', $value);
+                    }
 
-                return $value;
-            })
+                    return $value;
+                }
+            )
         ;
     }
 }

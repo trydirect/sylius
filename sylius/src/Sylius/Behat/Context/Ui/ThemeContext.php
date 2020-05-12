@@ -98,7 +98,7 @@ final class ThemeContext implements Context
     {
         $content = file_get_contents(rtrim($theme->getPath(), '/') . '/SyliusShopBundle/views/Homepage/index.html.twig');
 
-        Assert::same($this->homePage->getContents(), $content);
+        Assert::same($this->homePage->getContent(), $content);
     }
 
     /**
@@ -108,6 +108,6 @@ final class ThemeContext implements Context
     {
         $content = file_get_contents(rtrim($theme->getPath(), '/') . '/SyliusShopBundle/views/Homepage/index.html.twig');
 
-        Assert::notSame($this->homePage->getContents(), $content);
+        Assert::notSame($this->homePage->getContent(), $content);
     }
 }

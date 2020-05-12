@@ -1,5 +1,112 @@
 # CHANGELOG FOR `1.4.X`
 
+## v1.4.12 (2020-01-27)
+
+#### CVE-2020-5218: Ability to switch channels via GET parameter enabled in production environments
+
+*Please refer to [the original security advisory](https://github.com/Sylius/Sylius/security/advisories/GHSA-prg5-hg25-8grq) for the most updated information.*  
+
+**Impact:**
+
+This vulnerability gives the ability to switch channels via the `_channel_code` GET parameter in production environments. This was meant to be enabled only when `%kernel.debug%` is set to true. 
+
+However, if no `sylius_channel.debug` is set explicitly in the configuration, the default value which is `%kernel.debug%` will be not resolved and cast to boolean, enabling this debug feature even if that parameter is set to false.
+
+**Patches:**
+
+Patch has been provided for Sylius 1.3.x and newer - **1.3.16, 1.4.12, 1.5.9, 1.6.5**. Versions older than 1.3 are not covered by our security support anymore.
+
+**Workarounds:**
+
+Unsupported versions could be patched by adding the following configuration to run in production:
+
+```yaml
+sylius_channel:
+    debug: false
+```
+
+## v1.4.10, v1.4.11 (2019-12-03, 2019-12-05)
+
+#### CVE-2019-16768: Internal exception message exposure in login action.
+
+**Details:**
+
+Exception messages from internal exceptions (like database exception) are wrapped by 
+`\Symfony\Component\Security\Core\Exception\AuthenticationServiceException` and propagated through the system to UI. 
+Therefore, some internal system information may leak and be visible to the customer.
+
+A validation message with the exception details will be presented to the user when one will try to log into the shop.
+
+**Solution:**
+
+This release patches the reported vulnerability. The `src/Sylius/Bundle/UiBundle/Resources/views/Security/_login.html.twig` 
+file from Sylius should be overridden and `{{ messages.error(last_error.message) }}` changed to `{{ messages.error(last_error.messageKey) }}`.
+
+## v1.4.9 (2019-10-09)
+
+The last bugfix release for v1.4.x.
+
+#### Details
+
+- [#10641](https://github.com/Sylius/Sylius/issues/10641) [Documentation] Fixtures customization guides - fixes ([@CoderMaggie](https://github.com/CoderMaggie), [@Zales0123](https://github.com/Zales0123))
+- [#10645](https://github.com/Sylius/Sylius/issues/10645) [Docs] Fix Blackfire Ad ([@Tomanhez](https://github.com/Tomanhez))
+- [#10646](https://github.com/Sylius/Sylius/issues/10646) [Docs] Fix Ad ([@Tomanhez](https://github.com/Tomanhez))
+- [#10649](https://github.com/Sylius/Sylius/issues/10649) Update online course ad ([@kulczy](https://github.com/kulczy))
+- [#10652](https://github.com/Sylius/Sylius/issues/10652) Add Sylius 1.6 banner to the docs ([@kulczy](https://github.com/kulczy))
+- [#10680](https://github.com/Sylius/Sylius/issues/10680) Fix ChannelCollector related serialization issue in Symfony profiler ([@ostrolucky](https://github.com/ostrolucky))
+- [#10701](https://github.com/Sylius/Sylius/issues/10701) [Maintenance] Update docs with v1.6 ([@lchrusciel](https://github.com/lchrusciel))
+- [#10710](https://github.com/Sylius/Sylius/issues/10710) [Address book] Extensibility improvements ([@cyrosy](https://github.com/cyrosy))
+- [#10713](https://github.com/Sylius/Sylius/issues/10713) [Behat] Improve dashboard page extensibility ([@loic425](https://github.com/loic425))
+- [#10727](https://github.com/Sylius/Sylius/issues/10727) Fix channels label size and alignment ([@kulczy](https://github.com/kulczy))
+- [#10732](https://github.com/Sylius/Sylius/issues/10732) Update course ad ([@kulczy](https://github.com/kulczy))
+- [#10739](https://github.com/Sylius/Sylius/issues/10739) [Admin][Adressing] fixed province code validation regex ([@twojtylak](https://github.com/twojtylak))
+
+## v1.4.8 (2019-08-27)
+
+#### Details
+
+- [#10395](https://github.com/Sylius/Sylius/issues/10395) [Docs] How to add your custom fixtures? ([@Tomanhez](https://github.com/Tomanhez))
+- [#10397](https://github.com/Sylius/Sylius/issues/10397) [Docs]How to add your custom fixture suites? ([@Tomanhez](https://github.com/Tomanhez))
+- [#10512](https://github.com/Sylius/Sylius/issues/10512) [Admin] Improve breadcrumbs (especially for ProductVariants and PromotionCoupons) ([@CoderMaggie](https://github.com/CoderMaggie))
+- [#10540](https://github.com/Sylius/Sylius/issues/10540) Skip oauth_user_factory_is_not_overridden test if HWIOAuthBundle is not installed ([@vvasiloi](https://github.com/vvasiloi))
+- [#10553](https://github.com/Sylius/Sylius/issues/10553) Flags are not languages ([@vvasiloi](https://github.com/vvasiloi))
+- [#10558](https://github.com/Sylius/Sylius/issues/10558) Allow translation of custom labels ([@Prometee](https://github.com/Prometee))
+- [#10564](https://github.com/Sylius/Sylius/issues/10564) [Fixture] Improve order fixture ([@Zales0123](https://github.com/Zales0123))
+- [#10571](https://github.com/Sylius/Sylius/issues/10571) Update custom-promotion-rule.rst ([@jmwill86](https://github.com/jmwill86))
+- [#10579](https://github.com/Sylius/Sylius/issues/10579) Fix lazy choice tree will not automatically expanded ([@tom10271](https://github.com/tom10271))
+- [#10583](https://github.com/Sylius/Sylius/issues/10583) Enable sorting of customer orders in admin panel ([@pamil](https://github.com/pamil))
+- [#10598](https://github.com/Sylius/Sylius/issues/10598) Add course ad ([@kulczy](https://github.com/kulczy))
+- [#10599](https://github.com/Sylius/Sylius/issues/10599) [Documentation] Delete additional lines to remove ShopBundle ([@wpje](https://github.com/wpje))
+- [#10601](https://github.com/Sylius/Sylius/issues/10601) Change course CTA ([@kulczy](https://github.com/kulczy))
+- [#10603](https://github.com/Sylius/Sylius/issues/10603) [Shop] Promotion integrity checker fix ([@lchrusciel](https://github.com/lchrusciel))
+- [#10618](https://github.com/Sylius/Sylius/issues/10618) [Fixtures] Allow no shipping and payments in fixtures ([@igormukhingmailcom](https://github.com/igormukhingmailcom), [@Zales0123](https://github.com/Zales0123))
+- [#10624](https://github.com/Sylius/Sylius/issues/10624) Disable chrome autocomplete ([@kulczy](https://github.com/kulczy))
+- [#10626](https://github.com/Sylius/Sylius/issues/10626) [Fixture] Do not skip payments and shipments manually ([@Zales0123](https://github.com/Zales0123))
+- [#10629](https://github.com/Sylius/Sylius/issues/10629) [Docs] Add missing items to customization guide menu ([@Zales0123](https://github.com/Zales0123))
+- [#10633](https://github.com/Sylius/Sylius/issues/10633) Add Blackfire ad ([@kulczy](https://github.com/kulczy))
+- [#10634](https://github.com/Sylius/Sylius/issues/10634) Add Blackfire logo ([@kulczy](https://github.com/kulczy))
+
+## v1.4.7 (2019-07-25)
+
+#### Details
+
+- [#10165](https://github.com/Sylius/Sylius/issues/10165) Product attribute fixtures improvements ([@Zales0123](https://github.com/Zales0123), [@pamil](https://github.com/pamil))
+- [#10401](https://github.com/Sylius/Sylius/issues/10401) Psalm ([@loic425](https://github.com/loic425), [@pamil](https://github.com/pamil))
+- [#10464](https://github.com/Sylius/Sylius/issues/10464) Do not crash when duplicated locales are passed to the fixture ([@pamil](https://github.com/pamil))
+- [#10468](https://github.com/Sylius/Sylius/issues/10468) Remove Symfony workarounds and add conflicts ([@pamil](https://github.com/pamil))
+- [#10473](https://github.com/Sylius/Sylius/issues/10473) Update docs to follow Symfony 4 standards ([@pamil](https://github.com/pamil))
+- [#10488](https://github.com/Sylius/Sylius/issues/10488) Marked router dependency as deprecated in admin ImpersonateUserController ([@SebLours](https://github.com/SebLours))
+- [#10489](https://github.com/Sylius/Sylius/issues/10489) Make it possible to have no shipping methods for Order fixtures ([@TiMESPLiNTER](https://github.com/TiMESPLiNTER))
+- [#10492](https://github.com/Sylius/Sylius/issues/10492) [Admin] Minor fixes customer group validation form ([@Tomanhez](https://github.com/Tomanhez))
+- [#10494](https://github.com/Sylius/Sylius/issues/10494) [UI] Fix button groups radius ([@kulczy](https://github.com/kulczy))
+- [#10498](https://github.com/Sylius/Sylius/issues/10498) Add search bar css rule for Firefox ([@aloupfor](https://github.com/aloupfor))
+- [#10508](https://github.com/Sylius/Sylius/issues/10508) Revert "Make it possible to have no shipping methods for Order fixtures" ([@lchrusciel](https://github.com/lchrusciel))
+- [#10509](https://github.com/Sylius/Sylius/issues/10509) [Admin] Add link to product in variant breadcrumb ([@Tomanhez](https://github.com/Tomanhez))
+- [#10517](https://github.com/Sylius/Sylius/issues/10517) [Grid] Allow not to pass "apply_transition" button class ([@Zales0123](https://github.com/Zales0123))
+- [#10525](https://github.com/Sylius/Sylius/issues/10525) Bump lodash from 4.17.11 to 4.17.14 ([@dependabot](https://github.com/dependabot)[[@bot](https://github.com/bot)])
+- [#10535](https://github.com/Sylius/Sylius/issues/10535) [Shop] Fix passed channel context service to be composite ([@GSadee](https://github.com/GSadee))
+- [#10548](https://github.com/Sylius/Sylius/issues/10548) [HotFix?] Move mysql service to fix the build ([@Zales0123](https://github.com/Zales0123))
+
 ## v1.4.6 (2019-06-20)
 
 #### Details

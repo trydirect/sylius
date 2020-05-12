@@ -20,11 +20,11 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.3",
 
-        "sylius/resource": "^1.2",
-        "symfony/form": "^3.4|^4.1.1",
-        "symfony/http-foundation": "^3.4|^4.1.1",
+        "sylius/resource": "^1.6",
+        "symfony/form": "^4.4",
+        "symfony/http-foundation": "^4.4",
         "zendframework/zend-stdlib": "^3.1"
     },
     "require-dev": {
@@ -50,7 +50,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-master": "1.5-dev"
+            "dev-master": "1.6-dev"
         }
     }
 }

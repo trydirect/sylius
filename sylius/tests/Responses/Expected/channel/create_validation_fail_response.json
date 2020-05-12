@@ -23,6 +23,7 @@
         ]
       },
       "currencies": {},
+      "countries": {},
       "defaultTaxZone": {},
       "taxCalculationStrategy": {
         "errors": [
@@ -44,6 +45,7 @@
           "postcode": {}
         }
       },
+      "menuTaxon": {},
       "code": {
         "errors": [
           "Please enter channel code."

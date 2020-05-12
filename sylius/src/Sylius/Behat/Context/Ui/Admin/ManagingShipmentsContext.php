@@ -15,8 +15,9 @@ namespace Sylius\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Sylius\Behat\NotificationType;
-use Sylius\Behat\Page\Admin\Order\ShowPageInterface;
+use Sylius\Behat\Page\Admin\Order\ShowPageInterface as OrderShowPageInterface;
 use Sylius\Behat\Page\Admin\Shipment\IndexPageInterface;
+use Sylius\Behat\Page\Admin\Shipment\ShowPageInterface;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Model\CustomerInterface;
@@ -28,17 +29,25 @@ final class ManagingShipmentsContext implements Context
     /** @var IndexPageInterface */
     private $indexPage;
 
-    /** @var ShowPageInterface */
+    /** @var OrderShowPageInterface */
     private $orderShowPage;
 
     /** @var NotificationCheckerInterface */
     private $notificationChecker;
 
-    public function __construct(IndexPageInterface $indexPage, ShowPageInterface $orderShowPage, NotificationCheckerInterface $notificationChecker)
-    {
+    /** @var ShowPageInterface */
+    private $showPage;
+
+    public function __construct(
+        IndexPageInterface $indexPage,
+        OrderShowPageInterface $orderShowPage,
+        NotificationCheckerInterface $notificationChecker,
+        ShowPageInterface $showPage
+    ) {
         $this->indexPage = $indexPage;
         $this->orderShowPage = $orderShowPage;
         $this->notificationChecker = $notificationChecker;
+        $this->showPage = $showPage;
     }
 
     /**
@@ -66,7 +75,7 @@ final class ManagingShipmentsContext implements Context
         ];
 
         if ($channel !== null) {
-            $parameters = ['channel' => $channel->getCode()];
+            $parameters = ['channel' => $channel->getName()];
         }
 
         Assert::true($this->indexPage->isSingleResourceOnPage($parameters));
@@ -81,6 +90,14 @@ final class ManagingShipmentsContext implements Context
     }
 
     /**
+     * @When I choose :channelName as a channel filter
+     */
+    public function iChooseChannelAsAChannelFilter(string $channelName): void
+    {
+        $this->indexPage->chooseChannelFilter($channelName);
+    }
+
+    /**
      * @When I filter
      */
     public function iFilter(): void
@@ -89,12 +106,20 @@ final class ManagingShipmentsContext implements Context
     }
 
     /**
-     * @Then I should see :count shipment(s) in the list
+     * @When I view the first shipment of the order :order
+     */
+    public function iViewTheShipmentOfTheOrder(OrderInterface $order): void
+    {
+        $this->showPage->open(['id' => $order->getShipments()->first()->getId()]);
+    }
+
+    /**
+     * @Then I should see( only) :count shipment(s) in the list
      * @Then I should see a single shipment in the list
      */
     public function iShouldSeeCountShipmentsInList(int $count = 1): void
     {
-        Assert::same($count, $this->indexPage->countItems());
+        Assert::same($this->indexPage->countItems(), $count);
     }
 
     /**
@@ -146,10 +171,42 @@ final class ManagingShipmentsContext implements Context
     }
 
     /**
+     * @When I ship the shipment of order :orderNumber with :trackingCode tracking code
+     */
+    public function iShipTheShipmentOfOrderWithTrackingCode(string $orderNumber, string $trackingCode): void
+    {
+        $this->indexPage->shipShipmentOfOrderWithTrackingCode($orderNumber, $trackingCode);
+    }
+
+    /**
      * @Then I should see order page with details of order :order
      */
     public function iShouldSeeOrderPageWithDetailsOfOrder(OrderInterface $order): void
     {
         Assert::true($this->orderShowPage->isOpen(['id' => $order->getId()]));
+    }
+
+    /**
+     * @Then /^I should see shipment for (the "[^"]+" order) as (\d+)(?:|st|nd|rd|th) in the list$/
+     */
+    public function iShouldSeeShipmentForTheOrderInTheList(string $orderNumber, int $position): void
+    {
+        Assert::true($this->indexPage->isShipmentWithOrderNumberInPosition($orderNumber, $position));
+    }
+
+    /**
+     * @Then I should see :amount :product units in the list
+     */
+    public function iShouldSeeUnitsInTheList(int $amount, string $productName): void
+    {
+        Assert::same($this->showPage->getAmountOfUnits($productName), $amount);
+    }
+
+    /**
+     * @Then I should see the shipment of order :orderNumber shipped at :dateTime
+     */
+    public function iShouldSeeTheShippingDateAs(string $orderNumber, string $dateTime): void
+    {
+        Assert::same($this->indexPage->getShippedAtDate($orderNumber), $dateTime);
     }
 }

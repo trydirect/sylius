@@ -11,7 +11,7 @@ Here you will find all configuration options of ``sylius_grid``.
                 driver:
                     name: doctrine/orm
                     options:
-                        class: "%app.model.user%"
+                        class: "%app.model.user.class%"
                         repository:
                             method: myCustomMethod
                             arguments:
@@ -24,8 +24,8 @@ Here you will find all configuration options of ``sylius_grid``.
                         type: twig # Type of field
                         label: Name # Label
                         path: . # dot means a whole object
-                        sortable: ~ | field path
-                        position: 100
+                        sortable: ~ | field path
+                        position: 100
                         options:
                             template: :Grid/Column:_name.html.twig # Only twig column
                             vars:
@@ -72,7 +72,7 @@ Here you will find all configuration options of ``sylius_grid``.
                         options:
                             fields: [channel]
                         form_options:
-                            class: "%app.model.channel%"
+                            class: "%app.model.channel.class%"
                         default_value: ~
                 actions:
                     main:

@@ -41,11 +41,11 @@ To achieve that you will need to:
         {% endautoescape %}
     {% endblock %}
 
-* configure the email under ``sylius_mailer:`` in the ``config/packages/_sylius.yaml``.
+* configure the email under ``sylius_mailer:`` in the ``config/packages/sylius_mailer.yaml``.
 
 .. code-block:: yaml
 
-    # config/packages/_sylius.yaml
+    # config/packages/sylius_mailer.yaml
     sylius_mailer:
         sender:
             name: Example.com
@@ -72,28 +72,17 @@ To achieve that you will need to:
     use Sylius\Component\Mailer\Sender\SenderInterface;
     use Sylius\Component\Resource\Repository\RepositoryInterface;
 
-    class OutOfStockEmailManager
+    final class OutOfStockEmailManager
     {
-        /**
-         * @var SenderInterface
-         */
+        /** @var SenderInterface */
         private $emailSender;
 
-        /**
-         * @var AvailabilityCheckerInterface $availabilityChecker
-         */
+        /** @var AvailabilityCheckerInterface */
         private $availabilityChecker;
 
-        /**
-         * @var RepositoryInterface $adminUserRepository
-         */
+        /** @var RepositoryInterface $adminUserRepository */
         private $adminUserRepository;
 
-        /**
-         * @param SenderInterface $emailSender
-         * @param AvailabilityCheckerInterface $availabilityChecker
-         * @param RepositoryInterface $adminUserRepository
-         */
         public function __construct(
             SenderInterface $emailSender,
             AvailabilityCheckerInterface $availabilityChecker,
@@ -104,15 +93,12 @@ To achieve that you will need to:
             $this->adminUserRepository = $adminUserRepository;
         }
 
-        /**
-         * @param OrderInterface $order
-         */
-        public function sendOutOfStockEmail(OrderInterface $order)
+        public function sendOutOfStockEmail(OrderInterface $order): void
         {
             // get all admins, but remember to put them into an array
             $admins = $this->adminUserRepository->findAll()->toArray();
 
-            foreach($order->getItems() as $item) {
+            foreach ($order->getItems() as $item) {
                 $variant = $item->getVariant();
 
                 $stockIsSufficient = $this->availabilityChecker->isStockSufficient($variant, 1);
@@ -120,7 +106,8 @@ To achieve that you will need to:
                 if ($stockIsSufficient) {
                     continue;
                 }
-                foreach($admins as $admin) {
+
+                foreach ($admins as $admin) {
                     $this->emailSender->send('out_of_stock', [$admin->getEmail()], ['variant' => $variant]);
                 }
             }
@@ -132,18 +119,17 @@ To achieve that you will need to:
 
 .. code-block:: yaml
 
-    # config/services.yaml
+    # config/packages/_sylius.yaml
     services:
-        app.email_manager.out_of_stock:
-        class: App\EmailManager\OutOfStockEmailManager
-        arguments: ['@sylius.email_sender', '@sylius.availability_checker', '@sylius.repository.admin_user']
+        App\EmailManager\OutOfStockEmailManager:
+            arguments: ['@sylius.email_sender', '@sylius.availability_checker', '@sylius.repository.admin_user']
 
 4. Customize the state machine callback of Order's Payment:
 -----------------------------------------------------------
 
 .. code-block:: yaml
 
-    # config/packages/_sylius.yml
+    # config/packages/_sylius.yaml
     winzou_state_machine:
         sylius_order_payment:
             callbacks:

@@ -15,6 +15,7 @@
             "locales": {},
             "defaultLocale": {},
             "currencies": {},
+            "countries": {},
             "defaultTaxZone": {},
             "taxCalculationStrategy": {
                 "errors": [
@@ -36,6 +37,7 @@
                     "postcode": {}
                 }
             },
+            "menuTaxon": {},
             "code": {},
             "baseCurrency": {}
         }

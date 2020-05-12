@@ -1,7 +1,23 @@
-FROM php:7.2-fpm-alpine3.6
+ARG COMPOSER_VERSION=latest
+ARG PHP_VERSION=7.4-fpm-alpine
+
+FROM composer:$COMPOSER_VERSION AS composer
+FROM php:$PHP_VERSION AS base
+
+LABEL maintainer="info@optimum-web.com"
+
+ENV SYLIUS_VERSION=1.7.3
+
 WORKDIR '/app'
-RUN apk update && apk upgrade\
-    && apk add --no-cache curl libbz2 php7-bz2 php7-pdo php7-pgsql php7-bcmath php7-zmq php7-curl bash php7-pear php7-imagick openssh\
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+#
+# dev stage
+#
+FROM base AS dev
+RUN apk update && apk add --no-cache curl libbz2 php7-bz2 php7-pdo php7-pgsql php7-bcmath php7-zmq php7-curl bash \
+    php7-pear php7-imagick \
+    libzip-dev \
     libtool \
     postgresql-dev \
     libpng-dev \
@@ -18,7 +34,6 @@ RUN apk update && apk upgrade\
     libaio-dev \
     zlib-dev \
     git \
-    subversion \
     freetype-dev \
     libjpeg-turbo-dev \
     libmcrypt-dev \
@@ -29,26 +44,28 @@ RUN apk update && apk upgrade\
     hiredis-dev \
     make \
     unzip \
-    ffmpeg \
-    wget
+    && docker-php-ext-install -j$(nproc) gd bcmath zip bz2 pdo \
+    pdo_pgsql simplexml opcache sockets pcntl xsl pspell \
+    && docker-php-ext-configure gd \
+    && docker-php-ext-install pdo_mysql exif \
+    && pecl install imagick xdebug \
+    && docker-php-ext-enable imagick exif
 
-RUN curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/57.1/icu4c-57_1-src.tgz && tar -zxf /tmp/icu.tar.gz -C /tmp && cd /tmp/icu/source && ./configure --prefix=/usr/local && make && make install
+RUN curl -sS -o /tmp/icu.tar.gz -L https://github.com/unicode-org/icu/archive/release-66-1.tar.gz && tar -zxf /tmp/icu.tar.gz -C /tmp && cd /tmp/icu/source && ./configure --prefix=/usr/local && make && make install
 RUN docker-php-ext-configure intl --with-icu-dir=/usr/local && \
     docker-php-ext-install intl
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN docker-php-ext-install gd bcmath zip bz2 pdo pdo_pgsql simplexml opcache sockets mbstring pcntl xsl pspell
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
-RUN docker-php-ext-install pdo_mysql exif
-RUN pecl install imagick
-RUN docker-php-ext-enable imagick exif
-RUN pecl install xdebug
-RUN wget http://xdebug.org/files/xdebug-2.6.1.tgz
-RUN tar -xvzf xdebug-2.6.1.tgz
-RUN cd xdebug-2.6.1 \
-    && phpize \
+
+
+ENV XDEBUG_VERSION=2.9.5
+RUN curl -OL http://xdebug.org/files/xdebug-$XDEBUG_VERSION.tgz
+RUN tar -xvzf xdebug-${XDEBUG_VERSION}.tgz
+
+WORKDIR xdebug-${XDEBUG_VERSION}
+RUN phpize \
     && ./configure --enable-xdebug \
     && make \
     && make install \
+    && make test \
     && cp modules/xdebug.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718 \
     && echo 'zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20170718/xdebug.so' >> /usr/local/etc/php.ini \
     && echo 'xdebug.remote_enable=on' >> /usr/local/etc/php.ini \
@@ -63,6 +80,6 @@ RUN cd xdebug-2.6.1 \
     && sed -i 's/memory_limit\ =\ 128M/memory_limit\ =\ 1G/g' /usr/local/etc/php/php.ini-production \
     && echo 'date.timezone=Europe/Warsaw' >> /usr/local/etc/php/php.ini-development \
     && cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
-RUN cd /usr/src && curl -OL https://github.com/Sylius/Sylius/archive/v1.5.2.tar.gz
+RUN cd /usr/src && curl -OL https://github.com/Sylius/Sylius/archive/v$SYLIUS_VERSION.tar.gz
 RUN adduser -u 2000 -g 2000 -h /home/symfony -s /bin/bash -D symfony
-WORKDIR '/var/www/html'
+WORKDIR /var/www/html
